@@ -1,0 +1,206 @@
+---
+// src/pages/index.astro
+import MainLayout from '../layouts/MainLayout.astro';
+import Hero from '../components/Hero.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+
+const services = [
+  {
+    icon: '🔧',
+    title: 'Mecánica General',
+    description: 'Reparación y mantenimiento de motor, transmisión y más componentes vitales de tu vehículo.',
+  },
+  {
+    icon: '🛞',
+    title: 'Frenos',
+    description: 'Revisión, ajuste y cambio de sistema de frenos: pastillas, discos, líquido y calibración.',
+  },
+  {
+    icon: '⚡',
+    title: 'Sistema Eléctrico',
+    description: 'Diagnóstico y reparación del sistema eléctrico, alternador, motor de arranque y batería.',
+  },
+  {
+    icon: '🌡️',
+    title: 'Aire Acondicionado',
+    description: 'Carga, reparación y mantenimiento de A/C automotriz para un clima óptimo en cabina.',
+  },
+  {
+    icon: '🛢️',
+    title: 'Cambio de Aceite',
+    description: 'Cambio de aceite y filtros con productos de calidad acordes a la especificación de fábrica.',
+  },
+  {
+    icon: '🔍',
+    title: 'Diagnóstico',
+    description: 'Escaneo computarizado y diagnóstico completo de fallas con equipos de última generación.',
+  },
+];
+
+const features = [
+  {
+    icon: '🏆',
+    title: 'Experiencia',
+    subtitle: '10+ años de trayectoria',
+    description: 'Más de una década resolviendo averías mecánicas y electrónicas con un equipo técnico altamente capacitado y en constante formación.',
+  },
+  {
+    icon: '🤝',
+    title: 'Transparencia',
+    subtitle: 'Presupuestos sin compromiso',
+    description: 'Te explicamos con claridad qué necesita tu auto antes de tocarlo. Sin sorpresas ni cobros ocultos en tu factura final.',
+  },
+  {
+    icon: '🛡️',
+    title: 'Garantía',
+    subtitle: 'En todos nuestros trabajos',
+    description: 'Respaldamos cada servicio con garantía por escrito tanto en mano de obra como en repuestos e insumos utilizados.',
+  },
+];
+---
+
+<MainLayout
+  title="Servicio Mecánico | Taller Automotriz Profesional y de Confianza"
+  description="Taller mecánico automotriz especializado en mantenimiento preventivo, frenos, motor, sistema eléctrico y diagnóstico computarizado."
+>
+  <!-- Hero Section -->
+  <Hero />
+
+  <!-- Sección de Servicios Principales -->
+  <section class="py-20 bg-background">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider text-secondary bg-red-50 rounded-full mb-3">
+          Lo que hacemos
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-text tracking-tight mb-4">
+          Nuestros Servicios
+        </h2>
+        <p class="text-gray-600 text-base sm:text-lg">
+          Soluciones integrales de mecánica automotriz con tecnología de vanguardia y técnicos certificados para cuidar tu inversión.
+        </p>
+      </div>
+
+      <!-- Grid de 6 servicios -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        {services.map((service) => (
+          <ServiceCard
+            title={service.title}
+            description={service.description}
+            icon={service.icon}
+          />
+        ))}
+      </div>
+
+      <!-- Botón para ver todos los servicios -->
+      <div class="mt-12 text-center">
+        <a
+          href="/servicios"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-white font-medium text-sm hover:bg-primary/90 transition-colors shadow-sm hover:shadow"
+        >
+          <span>Ver todos los detalles y precios</span>
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección ¿Por qué elegirnos? -->
+  <section class="py-20 bg-white border-y border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary bg-blue-50 rounded-full mb-3">
+          Ventajas y Compromiso
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-text tracking-tight mb-4">
+          ¿Por qué elegirnos?
+        </h2>
+        <p class="text-gray-600 text-base sm:text-lg">
+          Nos esforzamos por brindarte la mejor experiencia de servicio, rapidez y honestidad en el cuidado de tu automóvil.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {features.map((feature) => (
+          <div class="relative bg-background rounded-2xl p-8 border border-gray-100/80 hover:border-primary/20 transition-all duration-300 hover:shadow-md flex flex-col items-start">
+            <div class="w-14 h-14 rounded-xl bg-white shadow-sm flex items-center justify-center text-3xl mb-6 border border-gray-100">
+              <span role="img" aria-label={feature.title}>{feature.icon}</span>
+            </div>
+            <div class="text-xs font-bold uppercase tracking-wider text-secondary mb-1">
+              {feature.subtitle}
+            </div>
+            <h3 class="text-xl font-bold text-text mb-3">
+              {feature.title}
+            </h3>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              {feature.description}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Franja de estadísticas rápidas -->
+      <div class="mt-16 bg-gradient-to-r from-primary to-[#182e4b] rounded-2xl p-8 sm:p-10 text-white grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div>
+          <div class="text-3xl sm:text-4xl font-extrabold text-white mb-1">10+</div>
+          <div class="text-xs sm:text-sm text-gray-300">Años de Trayectoria</div>
+        </div>
+        <div>
+          <div class="text-3xl sm:text-4xl font-extrabold text-white mb-1">5,000+</div>
+          <div class="text-xs sm:text-sm text-gray-300">Autos Reparados</div>
+        </div>
+        <div>
+          <div class="text-3xl sm:text-4xl font-extrabold text-white mb-1">100%</div>
+          <div class="text-xs sm:text-sm text-gray-300">Trabajos Garantizados</div>
+        </div>
+        <div>
+          <div class="text-3xl sm:text-4xl font-extrabold text-white mb-1">4.9 ★</div>
+          <div class="text-xs sm:text-sm text-gray-300">Satisfacción Clientes</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección CTA Final -->
+  <section class="py-20 bg-background relative overflow-hidden">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="relative rounded-3xl bg-gradient-to-br from-primary via-[#162f50] to-[#0f2036] p-8 sm:p-14 text-center text-white shadow-xl overflow-hidden">
+        <!-- Elementos decorativos -->
+        <div class="absolute -top-16 -right-16 w-64 h-64 bg-secondary/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-16 -left-16 w-64 h-64 bg-accent/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-2xl mx-auto">
+          <span class="inline-block text-3xl mb-4" role="img" aria-hidden="true">🚗</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 text-white">
+            ¿Necesitas ayuda con tu vehículo?
+          </h2>
+          <p class="text-base sm:text-lg text-gray-200 mb-8 leading-relaxed">
+            Agenda tu cita hoy mismo o visítanos para una revisión preventiva. Te entregamos un diagnóstico preciso y presupuesto sin compromiso.
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="/contacto"
+              class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-lg bg-secondary text-white font-semibold hover:bg-secondary/90 shadow-md hover:shadow-lg transition-all duration-200"
+            >
+              <span>Agendar Cita o Contactar</span>
+              <svg class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </a>
+            <a
+              href="tel:+525512345678"
+              class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold border border-white/20 transition-all duration-200"
+            >
+              <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              <span>Llamar Ahora</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

@@ -1,0 +1,209 @@
+---
+// src/pages/nosotros.astro
+import MainLayout from '../layouts/MainLayout.astro';
+
+const values = [
+  {
+    icon: '🎯',
+    name: 'Calidad',
+    description: 'Aplicamos estándares rigurosos en cada revisión y reparación, utilizando refacciones certificadas e insumos de primer nivel.',
+  },
+  {
+    icon: '🤝',
+    name: 'Honestidad',
+    description: 'Diagnósticos claros y transparentes. Solo recomendamos y cobramos las reparaciones que tu automóvil verdaderamente necesita.',
+  },
+  {
+    icon: '⏱️',
+    name: 'Compromiso',
+    description: 'Respetamos los tiempos de entrega pactados y garantizamos por escrito cada servicio realizado en nuestras instalaciones.',
+  },
+  {
+    icon: '🛠️',
+    name: 'Profesionalismo',
+    description: 'Equipo de mecánicos certificados en constante capacitación con las tecnologías vehiculares más recientes del mercado.',
+  },
+];
+
+const team = [
+  {
+    avatar: '👨‍🔧',
+    name: 'Carlos Mendoza',
+    role: 'Jefe de Taller & Mecánica Mayor',
+    experience: 'Más de 15 años de experiencia liderando diagnósticos mecánicos complejos, ajuste de motores y transmisiones.',
+  },
+  {
+    avatar: '⚡',
+    name: 'Alejandro Ramos',
+    role: 'Especialista en Diagnóstico Eléctrico',
+    experience: 'Experto en escaneo computarizado, calibración de módulos electrónicos y sistemas de inyección modernos.',
+  },
+  {
+    avatar: '👩‍💼',
+    name: 'Mariana Gutiérrez',
+    role: 'Asesora de Servicio al Cliente',
+    experience: 'Encargada de brindar atención personalizada, elaboración de presupuestos transparentes y seguimiento post-servicio.',
+  },
+];
+---
+
+<MainLayout
+  title="Sobre Nosotros | Servicio Mecánico"
+  description="Conoce la historia, valores y el equipo de mecánicos profesionales detrás de Servicio Mecánico. Más de 10 años cuidando tu automóvil."
+>
+  <!-- Hero / Banner -->
+  <section class="bg-gradient-to-b from-primary to-[#182e4b] text-white py-16 sm:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="inline-block px-3.5 py-1 rounded-full bg-white/10 text-white/90 text-xs font-semibold tracking-wider uppercase mb-4 border border-white/15">
+        Quiénes Somos
+      </span>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+        Sobre Nosotros
+      </h1>
+      <p class="text-gray-200 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+        Pasión por la mecánica de precisión, compromiso con tu seguridad y una vocación constante por el servicio honesto.
+      </p>
+    </div>
+  </section>
+
+  <!-- Historia -->
+  <section class="py-16 sm:py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7 space-y-5">
+          <span class="text-secondary font-bold text-xs uppercase tracking-wider">
+            Nuestra Trayectoria
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-text leading-snug">
+            Más de 10 años construyendo relaciones basadas en la confianza
+          </h2>
+          <p class="text-gray-600 text-sm sm:text-base leading-relaxed">
+            Servicio Mecánico nació en 2014 como un proyecto dedicado a ofrecer una alternativa honesta, profesional y accesible en el sector automotriz. Lo que comenzó como un pequeño taller con dos rampas de servicio se ha transformado hoy en un centro integral de mecánica y diagnóstico.
+          </p>
+          <p class="text-gray-600 text-sm sm:text-base leading-relaxed">
+            A lo largo de los años, hemos invertido en infraestructura, escáneres de última generación y capacitación técnica continua. Sin embargo, lo más importante sigue siendo nuestra filosofía fundacional: tratar cada vehículo como si fuera nuestro y a cada cliente con la total transparencia que merece.
+          </p>
+        </div>
+
+        <!-- Tarjetas destacadas de trayectoria -->
+        <div class="lg:col-span-5 grid grid-cols-1 gap-4">
+          <div class="p-6 rounded-2xl bg-background border border-gray-100 flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-blue-100 text-primary flex items-center justify-center text-xl font-bold flex-shrink-0">
+              📍
+            </div>
+            <div>
+              <h3 class="font-bold text-base text-text">Instalaciones Modernas</h3>
+              <p class="text-xs text-gray-500 mt-1">Equipadas con rampas hidráulicas, área de diagnóstico y almacén de repuestos.</p>
+            </div>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-background border border-gray-100 flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-red-100 text-secondary flex items-center justify-center text-xl font-bold flex-shrink-0">
+              🛠️
+            </div>
+            <div>
+              <h3 class="font-bold text-base text-text">Herramientas Avanzadas</h3>
+              <p class="text-xs text-gray-500 mt-1">Escaneo computarizado para todas las marcas nacionales e importadas.</p>
+            </div>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-background border border-gray-100 flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-bold flex-shrink-0">
+              ✅
+            </div>
+            <div>
+              <h3 class="font-bold text-base text-text">Procesos Certificados</h3>
+              <p class="text-xs text-gray-500 mt-1">Control de calidad e inspección final en cada vehículo antes de su entrega.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Valores -->
+  <section class="py-16 sm:py-20 bg-background border-y border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary bg-blue-50 rounded-full mb-3">
+          Nuestros Principios
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-text tracking-tight mb-4">
+          Valores que nos guían
+        </h2>
+        <p class="text-gray-600 text-base">
+          Estos cuatro pilares definen la manera en que trabajamos y atendemos a cada uno de nuestros clientes día a día.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {values.map((val) => (
+          <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200">
+            <div class="w-12 h-12 rounded-xl bg-background flex items-center justify-center text-2xl mb-4 border border-gray-100">
+              <span role="img" aria-label={val.name}>{val.icon}</span>
+            </div>
+            <h3 class="text-lg font-bold text-text mb-2">
+              {val.name}
+            </h3>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              {val.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Equipo -->
+  <section class="py-16 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider text-secondary bg-red-50 rounded-full mb-3">
+          Personal Calificado
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-text tracking-tight mb-4">
+          Nuestro Equipo
+        </h2>
+        <p class="text-gray-600 text-base">
+          Profesionales apasionados por su trabajo, con la experiencia y dedicación necesarias para cuidar de tu automóvil.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {team.map((member) => (
+          <div class="bg-background rounded-2xl p-8 border border-gray-100 text-center flex flex-col items-center hover:shadow-md transition-all duration-200">
+            <!-- Emoji Avatar -->
+            <div class="w-24 h-24 rounded-full bg-white shadow-sm border border-gray-200 flex items-center justify-center text-5xl mb-5 select-none">
+              <span role="img" aria-label={member.name}>{member.avatar}</span>
+            </div>
+            <h3 class="text-xl font-bold text-text mb-1">
+              {member.name}
+            </h3>
+            <p class="text-secondary font-medium text-xs uppercase tracking-wider mb-4">
+              {member.role}
+            </p>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              {member.experience}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Banner Invitación -->
+  <section class="py-12 bg-primary text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-3">¿Quieres conocer nuestro taller?</h2>
+      <p class="text-gray-200 text-sm sm:text-base mb-6">
+        Visítanos y déjanos mostrarte la calidad de nuestras instalaciones y la honestidad de nuestro equipo.
+      </p>
+      <a
+        href="/contacto"
+        class="inline-flex items-center justify-center px-7 py-3 rounded-lg bg-secondary text-white font-semibold hover:bg-secondary/90 shadow transition-all duration-200"
+      >
+        <span>Contáctanos hoy mismo</span>
+      </a>
+    </div>
+  </section>
+</MainLayout>

@@ -1,0 +1,158 @@
+---
+// src/pages/servicios.astro
+import MainLayout from '../layouts/MainLayout.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+
+const services = [
+  {
+    icon: '🔧',
+    title: 'Mecánica General',
+    price: 'Desde $1,200 MXN',
+    description: 'Reparación y mantenimiento preventivo y correctivo para motor, transmisión, embrague (clutch), sistema de suspensión y dirección hidráulica o asistida.',
+  },
+  {
+    icon: '🛞',
+    title: 'Frenos',
+    price: 'Desde $850 MXN',
+    description: 'Revisión técnica de frenos: cambio de balatas/pastillas, rectificado de discos y tambores, sustitución de líquido de frenos y calibración de freno de mano.',
+  },
+  {
+    icon: '⚡',
+    title: 'Sistema Eléctrico',
+    price: 'Desde $650 MXN',
+    description: 'Diagnóstico y reparación de alternadores, motores de arranque, baterías, sistemas de iluminación, cableado y resolución de cortos o fallas eléctricas complejas.',
+  },
+  {
+    icon: '🌡️',
+    title: 'Aire Acondicionado',
+    price: 'Desde $750 MXN',
+    description: 'Detección de fugas mediante tinte UV, recarga de refrigerante ecológico, reemplazo de filtro de cabina y desinfección de ductos de ventilación.',
+  },
+  {
+    icon: '🛢️',
+    title: 'Cambio de Aceite y Filtros',
+    price: 'Desde $950 MXN',
+    description: 'Servicio con aceites sintéticos o minerales de marcas premium, cambio de filtro de aceite, filtro de aire y revisión de seguridad de 25 puntos clave de cortesía.',
+  },
+  {
+    icon: '🔍',
+    title: 'Diagnóstico Computarizado',
+    price: 'Desde $500 MXN',
+    description: 'Escaneo electrónico multimarca con escáner profesional para interpretar códigos de error (Check Engine, ABS, Airbag), monitoreo de sensores en vivo e informe técnico.',
+  },
+];
+
+const inclusions = [
+  {
+    icon: '📋',
+    title: 'Inspección de 25 puntos',
+    text: 'Revisamos niveles de fluidos, luces, neumáticos y suspensión sin costo adicional.',
+  },
+  {
+    icon: '⚙️',
+    title: 'Repuestos Originales u OEM',
+    text: 'Trabajamos con componentes de alta durabilidad avalados por los fabricantes.',
+  },
+  {
+    icon: '🛡️',
+    title: 'Garantía por Escrito',
+    text: 'Cuentas con respaldo en mano de obra y piezas para tu absoluta tranquilidad.',
+  },
+];
+---
+
+<MainLayout
+  title="Nuestros Servicios | Servicio Mecánico Especializado"
+  description="Conoce nuestros servicios de taller mecánico: afinación, frenos, mecánica mayor, suspensión, cambio de aceite y diagnóstico con precios claros y honestos."
+>
+  <!-- Cabecera de Página -->
+  <section class="bg-gradient-to-b from-primary to-[#182e4b] text-white py-16 sm:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="inline-block px-3.5 py-1 rounded-full bg-white/10 text-white/90 text-xs font-semibold tracking-wider uppercase mb-4 border border-white/15">
+        Catálogo de Soluciones Automotrices
+      </span>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+        Nuestros Servicios
+      </h1>
+      <p class="text-gray-200 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+        Soluciones profesionales de mantenimiento preventivo y correctivo. Cuidamos el rendimiento, seguridad y durabilidad de tu vehículo con precios justos y transparentes.
+      </p>
+    </div>
+  </section>
+
+  <!-- Beneficios incluidos -->
+  <section class="bg-white border-b border-gray-100 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {inclusions.map((inc) => (
+          <div class="flex items-center gap-4 p-3 sm:p-4 rounded-xl bg-background border border-gray-100">
+            <span class="text-3xl flex-shrink-0" role="img" aria-hidden="true">{inc.icon}</span>
+            <div>
+              <h4 class="font-bold text-sm text-text">{inc.title}</h4>
+              <p class="text-xs text-gray-500 leading-normal">{inc.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Grid de Servicios Detallados -->
+  <section class="py-16 sm:py-20 bg-background">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-12 text-center sm:text-left">
+        <h2 class="text-2xl sm:text-3xl font-bold text-text">
+          Servicios mecánicos especializados
+        </h2>
+        <p class="text-gray-600 text-sm sm:text-base mt-1">
+          Precios de referencia que incluyen mano de obra calificada. Cotiza según el modelo y año de tu vehículo.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {services.map((service) => (
+          <ServiceCard
+            title={service.title}
+            description={service.description}
+            icon={service.icon}
+            price={service.price}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección: ¿No encuentras lo que buscas? -->
+  <section class="py-16 bg-white border-t border-gray-100">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-2xl bg-gradient-to-r from-primary to-[#182e4b] p-8 sm:p-12 text-white text-center shadow-lg">
+        <div class="w-14 h-14 mx-auto rounded-full bg-white/10 flex items-center justify-center text-2xl mb-4">
+          💬
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold mb-3">
+          ¿No encuentras lo que buscas?
+        </h2>
+        <p class="text-gray-200 text-sm sm:text-base max-w-xl mx-auto mb-8 leading-relaxed">
+          Realizamos trabajos especiales, reparaciones de caja de velocidades, adaptaciones y servicios personalizados para cualquier marca o modelo.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a
+            href="/contacto"
+            class="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3 rounded-lg bg-secondary text-white font-semibold hover:bg-secondary/90 shadow transition-all duration-200"
+          >
+            <span>Contáctanos directamente</span>
+            <svg class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+          <a
+            href="tel:+525512345678"
+            class="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold border border-white/20 transition-all duration-200 text-sm"
+          >
+            <span>Llamar al taller</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

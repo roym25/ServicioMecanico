@@ -1,0 +1,53 @@
+---
+// src/components/ServiceCard.astro
+interface Props {
+  title: string;
+  description: string;
+  icon: string;
+  price?: string;
+}
+
+const { title, description, icon, price } = Astro.props;
+---
+
+<article class="group bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-100 p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1">
+  <div>
+    <!-- Icon Container -->
+    <div class="w-16 h-16 rounded-2xl bg-blue-50/70 border border-blue-100 flex items-center justify-center text-3xl mb-5 group-hover:scale-110 group-hover:bg-blue-100/70 transition-transform duration-300 select-none">
+      <span role="img" aria-label={title}>{icon}</span>
+    </div>
+
+    <!-- Title -->
+    <h3 class="text-xl font-bold text-text mb-2.5 group-hover:text-primary transition-colors duration-200">
+      {title}
+    </h3>
+
+    <!-- Description -->
+    <p class="text-gray-600 text-sm leading-relaxed mb-6">
+      {description}
+    </p>
+  </div>
+
+  <!-- Bottom Section (Price / Action) -->
+  <div class="pt-4 border-t border-gray-100 flex items-center justify-between mt-auto">
+    {price ? (
+      <div>
+        <span class="text-xs text-gray-500 uppercase tracking-wider block font-medium">Precio estimado</span>
+        <span class="text-secondary font-bold text-lg">{price}</span>
+      </div>
+    ) : (
+      <span class="text-xs font-medium text-primary/70">Atención profesional</span>
+    )}
+
+    <a
+      href="/contacto"
+      class="inline-flex items-center text-xs font-semibold text-primary group-hover:text-secondary transition-colors"
+      aria-label={`Solicitar información sobre ${title}`}
+    >
+      <span>Cotizar</span>
+      <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+  </div>
+</article>
