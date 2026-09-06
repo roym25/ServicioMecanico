@@ -1,0 +1,189 @@
+---
+// src/pages/admin/login.astro
+import '../../styles/global.css';
+---
+
+<!doctype html>
+<html lang="es" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar Sesión | Servicio Mecánico</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="min-h-full flex items-center justify-center p-4 bg-gradient-to-br from-[#1E3A5F] via-[#162C48] to-[#0D1A2D] text-text relative overflow-hidden">
+    <!-- Subtle glowing background accents -->
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-secondary/15 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-accent/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Centered Card -->
+    <div class="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 sm:p-10 border border-white/20">
+      <!-- Brand & Header -->
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary text-3xl mb-4 shadow-xs">
+          <span role="img" aria-label="Llave mecánica">🔧</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-primary tracking-tight">
+          Servicio Mecánico
+        </h1>
+        <p class="text-sm font-medium text-gray-500 mt-1">
+          Sistema de Gestión
+        </p>
+      </div>
+
+      <!-- Error message area (hidden by default) -->
+      <div
+        id="error-message"
+        class="hidden mb-6 p-3.5 rounded-xl bg-red-50 border border-red-200 text-secondary text-sm flex items-start gap-2.5 transition-all"
+        role="alert"
+      >
+        <span class="text-base flex-shrink-0" aria-hidden="true">⚠️</span>
+        <p id="error-text" class="leading-snug font-medium"></p>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="space-y-5" novalidate>
+        <div>
+          <label for="email" class="block text-xs font-semibold text-text uppercase tracking-wider mb-2">
+            Correo electrónico
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            autocomplete="email"
+            placeholder="admin@ejemplo.com"
+            class="w-full px-4 py-3 rounded-xl border border-gray-300 text-text placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition duration-150 text-sm"
+          />
+        </div>
+
+        <div>
+          <label for="password" class="block text-xs font-semibold text-text uppercase tracking-wider mb-2">
+            Contraseña
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            autocomplete="current-password"
+            placeholder="••••••••"
+            class="w-full px-4 py-3 rounded-xl border border-gray-300 text-text placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition duration-150 text-sm"
+          />
+        </div>
+
+        <button
+          type="submit"
+          id="submit-btn"
+          class="w-full py-3.5 px-4 rounded-xl bg-secondary text-white font-semibold text-sm hover:bg-secondary/90 active:scale-[0.99] transition-all duration-150 shadow-md hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <span id="btn-text">Iniciar Sesión</span>
+          <svg
+            id="btn-spinner"
+            class="hidden animate-spin h-5 w-5 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg>
+        </button>
+      </form>
+
+      <div class="mt-8 pt-6 border-t border-gray-100 text-center">
+        <p class="text-xs text-gray-400">
+          Acceso restringido únicamente para personal autorizado.
+        </p>
+      </div>
+    </div>
+
+    <!-- Client-side Supabase Auth Script -->
+    <script>
+      import { createClient } from '@supabase/supabase-js';
+
+      const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || 'https://zsddtosxnfqmbyxptkfs.supabase.co';
+      const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzZGR0b3N4bmZxbWJ5eHB0a2ZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NTc5MjEsImV4cCI6MjEwNDIzMzkyMX0.x7Oysn4OW3p5_Lwaj87vjdKOWvRyfeXKuQhGsO7XjGw';
+
+      const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+      // Check if already logged in on page load
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        window.location.href = '/admin';
+      }
+
+      const form = document.getElementById('login-form') as HTMLFormElement | null;
+      const emailInput = document.getElementById('email') as HTMLInputElement | null;
+      const passwordInput = document.getElementById('password') as HTMLInputElement | null;
+      const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+      const btnText = document.getElementById('btn-text');
+      const btnSpinner = document.getElementById('btn-spinner');
+      const errorMessage = document.getElementById('error-message');
+      const errorText = document.getElementById('error-text');
+
+      function showError(message: string) {
+        if (errorText) errorText.textContent = message;
+        errorMessage?.classList.remove('hidden');
+      }
+
+      function hideError() {
+        errorMessage?.classList.add('hidden');
+      }
+
+      function setLoading(isLoading: boolean) {
+        if (submitBtn) submitBtn.disabled = isLoading;
+        if (isLoading) {
+          btnText?.classList.add('hidden');
+          btnSpinner?.classList.remove('hidden');
+        } else {
+          btnText?.classList.remove('hidden');
+          btnSpinner?.classList.add('hidden');
+        }
+      }
+
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideError();
+
+        const email = emailInput?.value.trim();
+        const password = passwordInput?.value;
+
+        if (!email || !password) {
+          showError('Por favor ingresa tu correo electrónico y contraseña.');
+          return;
+        }
+
+        setLoading(true);
+
+        try {
+          const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+          });
+
+          if (error) {
+            let displayMsg = 'Error al iniciar sesión. Inténtalo de nuevo.';
+            if (
+              error.message.includes('Invalid login credentials') ||
+              error.message.includes('invalid_grant')
+            ) {
+              displayMsg = 'Credenciales inválidas. Verifica tu correo y contraseña.';
+            } else if (error.message) {
+              displayMsg = error.message;
+            }
+            showError(displayMsg);
+            setLoading(false);
+          } else if (data?.session) {
+            window.location.href = '/admin';
+          }
+        } catch (err: any) {
+          showError(err.message || 'Ocurrió un error inesperado al iniciar sesión.');
+          setLoading(false);
+        }
+      });
+    </script>
+  </body>
+</html>
