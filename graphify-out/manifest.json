@@ -1,0 +1,158 @@
+{
+  "astro.config.mjs": {
+    "mtime": 1788666785.5563698,
+    "seen": 1788668854.084835,
+    "ast_hash": "587a294a5ddda08529949ecb2763e9cd",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1788728141.764858,
+    "seen": 1788736967.4753373,
+    "ast_hash": "90b5b625c0e9383684951a11e1ddace6",
+    "semantic_hash": ""
+  },
+  "src/components/Footer.astro": {
+    "mtime": 1788733471.2292726,
+    "seen": 1788736967.4753416,
+    "ast_hash": "213082fc4a0a8e7b56a7838ebf851ac8",
+    "semantic_hash": ""
+  },
+  "src/components/Header.astro": {
+    "mtime": 1788733471.2302978,
+    "seen": 1788736967.4753435,
+    "ast_hash": "88c6f1c7862263ee32dea6c14709d04b",
+    "semantic_hash": ""
+  },
+  "src/components/Hero.astro": {
+    "mtime": 1788733471.2333717,
+    "seen": 1788736967.4753454,
+    "ast_hash": "b8aee52630c8e88b6d02e36dc95360df",
+    "semantic_hash": ""
+  },
+  "src/components/ServiceCard.astro": {
+    "mtime": 1788733471.2343974,
+    "seen": 1788736967.4753473,
+    "ast_hash": "bb670a55d0151f77af649daae4b8279f",
+    "semantic_hash": ""
+  },
+  "src/layouts/AdminLayout.astro": {
+    "mtime": 1788736523.2251227,
+    "seen": 1788736967.4753485,
+    "ast_hash": "04d0524338a8cc8aec60b1bb79b18185",
+    "semantic_hash": ""
+  },
+  "src/layouts/MainLayout.astro": {
+    "mtime": 1788733471.2343974,
+    "seen": 1788736967.47535,
+    "ast_hash": "e3de1e785c96143e339275edba95625e",
+    "semantic_hash": ""
+  },
+  "src/lib/supabase.ts": {
+    "mtime": 1788668080.8728695,
+    "seen": 1788668854.0848637,
+    "ast_hash": "b1183f302793572a50d4e7acb4ed76e7",
+    "semantic_hash": ""
+  },
+  "src/pages/admin/clientes/index.astro": {
+    "mtime": 1788732827.7882533,
+    "seen": 1788736967.475601,
+    "ast_hash": "1214d040aae2609ab4fad8e636bb9431",
+    "semantic_hash": ""
+  },
+  "src/pages/admin/index.astro": {
+    "mtime": 1788736055.2935097,
+    "seen": 1788736967.4756055,
+    "ast_hash": "e6638d2c57f0aea52a73679b54d50802",
+    "semantic_hash": ""
+  },
+  "src/pages/admin/login.astro": {
+    "mtime": 1788668356.9789202,
+    "seen": 1788668854.0848694,
+    "ast_hash": "2659381e29ed050667e9adc700614b0b",
+    "semantic_hash": ""
+  },
+  "src/pages/admin/trabajos/index.astro": {
+    "mtime": 1788732827.7545185,
+    "seen": 1788736967.4758463,
+    "ast_hash": "3edfaa4ed1b85c05c879960a21033614",
+    "semantic_hash": ""
+  },
+  "src/pages/admin/vehiculos/index.astro": {
+    "mtime": 1788732827.7907164,
+    "seen": 1788736967.4758506,
+    "ast_hash": "473ea7c825661110c1c2cfcc3c9aa88d",
+    "semantic_hash": ""
+  },
+  "src/pages/contacto.astro": {
+    "mtime": 1788666980.634006,
+    "seen": 1788668854.0848744,
+    "ast_hash": "29bfa70c55ff29693c12d694c4dc530c",
+    "semantic_hash": ""
+  },
+  "src/pages/index.astro": {
+    "mtime": 1788733471.237733,
+    "seen": 1788736967.4760773,
+    "ast_hash": "36cea699c5a84bab2cc3807d90dbd106",
+    "semantic_hash": ""
+  },
+  "src/pages/nosotros.astro": {
+    "mtime": 1788666967.995373,
+    "seen": 1788668854.0848787,
+    "ast_hash": "e769901eea74d27e11991c05145a1114",
+    "semantic_hash": ""
+  },
+  "src/pages/servicios.astro": {
+    "mtime": 1788666958.6386347,
+    "seen": 1788668854.0848804,
+    "ast_hash": "d5bfa11e56418acb654034ec15aa3b1d",
+    "semantic_hash": ""
+  },
+  "tsconfig.json": {
+    "mtime": 1788666390.9284537,
+    "seen": 1788668854.0848823,
+    "ast_hash": "cdb935a0df6cf1d722dbce04b1f73403",
+    "semantic_hash": ""
+  },
+  ".agents/rules/graphify.md": {
+    "mtime": 1788665745.6460783,
+    "seen": 1788668854.084884,
+    "ast_hash": "a0e4d192b9e2e17256124dbfc8e24e6a",
+    "semantic_hash": ""
+  },
+  ".agents/workflows/graphify.md": {
+    "mtime": 1788665745.6500158,
+    "seen": 1788668854.0848856,
+    "ast_hash": "a831cf3669f1e6ab85d8a80ebe655f99",
+    "semantic_hash": ""
+  },
+  "public/favicon.svg": {
+    "mtime": 1788666881.744213,
+    "seen": 1788668854.0848901,
+    "ast_hash": "9ce6180ef86c9797c91dd3d7bff2c0b1",
+    "semantic_hash": ""
+  },
+  "src/pages/admin/clientes/detalle.astro": {
+    "mtime": 1788732827.7470431,
+    "seen": 1788736967.4755976,
+    "ast_hash": "87857ae67a33e9c1ec4d743fc8e10352",
+    "semantic_hash": ""
+  },
+  "src/pages/admin/configuracion/index.astro": {
+    "mtime": 1788731090.0959322,
+    "seen": 1788736967.475603,
+    "ast_hash": "8955c42a70f1ba05215cf30f0b6f143a",
+    "semantic_hash": ""
+  },
+  "src/pages/admin/vehiculos/detalle.astro": {
+    "mtime": 1788732827.7907164,
+    "seen": 1788736967.4758484,
+    "ast_hash": "77763f58bd03ee68f48c2bd4651f82ac",
+    "semantic_hash": ""
+  },
+  "public/fondoindex.jpg": {
+    "mtime": 1747355722.1076524,
+    "seen": 1788736967.4774828,
+    "ast_hash": "ada68c44c279423078b3a383c8934910",
+    "semantic_hash": ""
+  }
+}

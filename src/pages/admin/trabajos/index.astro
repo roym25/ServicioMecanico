@@ -1,783 +1,824 @@
 ---
-// import AdminLayout from '../../layouts/AdminLayout.astro'
 import AdminLayout from '../../../layouts/AdminLayout.astro';
 ---
 
-<AdminLayout title="Historial de Trabajos" subtitle="Seguimiento de órdenes de servicio, reparaciones y entregas">
-  <!-- Toast Notification -->
-  <div
-    id="toast"
-    class="fixed bottom-5 right-5 z-50 hidden max-w-sm w-full p-4 rounded-xl shadow-2xl text-sm font-medium transition-all duration-300 transform translate-y-4 opacity-0 flex items-center justify-between gap-3 border"
-    role="status"
-    aria-live="polite"
-  >
-    <div class="flex items-center gap-2.5">
-      <span id="toast-icon" class="text-xl">✅</span>
-      <span id="toast-message" class="text-xs sm:text-sm">Operación realizada con éxito</span>
+<AdminLayout title="Historial de Trabajos">
+  <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div>
+      <h1 class="text-3xl font-bold text-[#1E3A5F]">Trabajos</h1>
+      <p class="text-gray-600 mt-2">Gestión de trabajos y mantenimientos</p>
     </div>
-    <button id="toast-close" type="button" class="text-gray-400 hover:text-gray-700 p-1">
-      ✕
+    <button id="btnNuevoTrabajo" class="px-4 py-2 bg-[#1E3A5F] text-white rounded hover:bg-[#1E3A5F]/90 transition-colors flex items-center self-start md:self-auto">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+      Nuevo Trabajo
     </button>
   </div>
 
-  <div class="space-y-6">
-    <!-- Top Action Bar -->
-    <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-      <!-- Search input & filter -->
-      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-1 max-w-xl">
-        <div class="relative flex-1">
-          <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
-          </span>
-          <input
-            type="text"
-            id="search-input"
-            placeholder="Buscar por vehículo, cliente, descripción o costo..."
-            class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
-          />
-        </div>
-
-        <!-- Filter by Status -->
-        <select
-          id="filter-estado"
-          class="px-3.5 py-2.5 rounded-xl border border-gray-200 text-xs font-semibold text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white transition shrink-0"
-        >
-          <option value="todos">Todos los estados</option>
-          <option value="proceso">⏳ En proceso</option>
-          <option value="entregado">✓ Entregados</option>
-        </select>
+  <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 mb-6 flex flex-col md:flex-row gap-4">
+    <div class="flex-1 relative">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
       </div>
-
-      <!-- New Job Button & Counter -->
-      <div class="flex items-center gap-3">
-        <span id="trabajo-count-badge" class="text-xs font-semibold text-gray-500 bg-gray-100 px-3 py-1.5 rounded-lg">
-          0 trabajos
-        </span>
-        <button
-          type="button"
-          id="btn-open-create-modal"
-          class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold bg-secondary hover:bg-secondary/90 text-white shadow-sm hover:shadow transition transform active:scale-95 shrink-0"
-        >
-          <span>📋</span>
-          <span>+ Nuevo Trabajo</span>
-        </button>
-      </div>
+      <input type="text" id="searchInput" placeholder="Buscar por vehículo, cliente o descripción..." class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F] sm:text-sm">
     </div>
+    <select id="statusFilter" class="block w-full md:w-48 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F] sm:text-sm rounded-md">
+      <option value="all">Todos los estados</option>
+      <option value="in-progress">En proceso</option>
+      <option value="completed">Entregados</option>
+    </select>
+  </div>
 
-    <!-- Data Table Container -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-      <!-- Loading state -->
-      <div id="table-loading" class="py-16 flex flex-col items-center justify-center space-y-3">
-        <div class="w-10 h-10 border-4 border-primary/20 border-t-secondary rounded-full animate-spin"></div>
-        <p class="text-sm font-medium text-gray-500">Cargando historial de trabajos...</p>
-      </div>
+  <!-- Loading State -->
+  <div id="loadingState" class="py-12 text-center hidden">
+    <svg class="animate-spin h-8 w-8 text-[#1E3A5F] mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+    <p class="text-gray-500">Cargando trabajos...</p>
+  </div>
 
-      <!-- Responsive Table -->
-      <div id="table-container" class="hidden overflow-x-auto">
-        <table class="w-full text-left text-sm">
-          <thead class="bg-gray-50 text-xs font-bold uppercase tracking-wider text-gray-500 border-b border-gray-100">
-            <tr>
-              <th class="py-3.5 px-4">Fecha Ingreso</th>
-              <th class="py-3.5 px-4">Vehículo</th>
-              <th class="py-3.5 px-4">Descripción</th>
-              <th class="py-3.5 px-4">Costo</th>
-              <th class="py-3.5 px-4">Km Entrada</th>
-              <th class="py-3.5 px-4 text-center">Estado</th>
-              <th class="py-3.5 px-4 text-center">Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="trabajos-table-body" class="divide-y divide-gray-100">
-            <!-- Populated dynamically -->
-          </tbody>
-        </table>
-
-        <!-- Empty state -->
-        <div id="empty-state" class="hidden py-16 text-center">
-          <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center text-3xl">
-            📋
-          </div>
-          <h3 class="text-base font-bold text-gray-800">No se encontraron trabajos</h3>
-          <p class="text-xs text-gray-500 mt-1 max-w-sm mx-auto">
-            No hay órdenes de servicio que coincidan con la búsqueda o aún no se han registrado trabajos en el taller.
-          </p>
-          <button
-            type="button"
-            id="empty-btn-create"
-            class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-secondary text-white hover:bg-secondary/90 transition shadow-sm"
-          >
-            <span>➕</span> Registrar Nuevo Trabajo
-          </button>
-        </div>
-      </div>
+  <!-- Table -->
+  <div id="tableContainer" class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-gray-50 text-gray-600">
+          <tr>
+            <th class="px-4 py-3 font-medium">Fecha Ingreso</th>
+            <th class="px-4 py-3 font-medium">Vehículo</th>
+            <th class="px-4 py-3 font-medium">Tipo de Trabajo</th>
+            <th class="px-4 py-3 font-medium">Descripción</th>
+            <th class="px-4 py-3 font-medium">Costo</th>
+            <th class="px-4 py-3 font-medium">Km Entrada</th>
+            <th class="px-4 py-3 font-medium">Estado</th>
+            <th class="px-4 py-3 font-medium text-right">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody" class="divide-y divide-gray-100">
+          <!-- Rendered by JS -->
+        </tbody>
+      </table>
+    </div>
+    <div id="emptyState" class="hidden px-6 py-12 text-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-300 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+      </svg>
+      <h3 class="text-lg font-medium text-gray-900 mb-1">No se encontraron trabajos</h3>
+      <p class="text-gray-500">Intenta con otra búsqueda o registra un nuevo trabajo.</p>
     </div>
   </div>
 
-  <!-- Modal Create / Edit Trabajo -->
-  <div
-    id="trabajo-modal"
-    class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="modal-title"
-  >
-    <div class="bg-white rounded-2xl max-w-xl w-full shadow-2xl border border-gray-100 overflow-hidden my-8">
-      <!-- Modal Header -->
-      <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-        <div>
-          <h3 id="modal-title" class="text-lg font-bold text-primary">Nuevo Trabajo</h3>
-          <p class="text-xs text-gray-500">Orden de servicio y registro de mantenimiento</p>
-        </div>
-        <button
-          type="button"
-          id="btn-close-modal"
-          class="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 transition"
-          aria-label="Cerrar modal"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+  <!-- Modal Formulario -->
+  <div id="formModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col">
+      <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-[#F8F9FA] rounded-t-lg">
+        <h2 id="modalTitle" class="text-xl font-bold text-[#1E3A5F]">Nuevo Trabajo</h2>
+        <button type="button" class="close-modal text-gray-400 hover:text-gray-600 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
+      
+      <div class="p-6 overflow-y-auto flex-1">
+        <form id="trabajoForm" class="space-y-6">
+          <input type="hidden" id="id_trabajo" name="id_trabajo">
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="col-span-1 md:col-span-2">
+              <label for="id_vehiculo" class="block text-sm font-medium text-gray-700 mb-1">Vehículo <span class="text-[#E63946]">*</span></label>
+              <select id="id_vehiculo" name="id_vehiculo" required class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]">
+                <option value="">Seleccione un vehículo</option>
+              </select>
+            </div>
 
-      <!-- Modal Form -->
-      <form id="trabajo-form" class="p-6 space-y-4">
-        <input type="hidden" id="form-trabajo-id" value="" />
+            <div>
+              <label for="id_tipo_trabajo" class="block text-sm font-medium text-gray-700 mb-1">Tipo de Trabajo</label>
+              <select id="id_tipo_trabajo" name="id_tipo_trabajo" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]">
+                <option value="">Ninguno (Genérico)</option>
+              </select>
+            </div>
 
-        <!-- Vehículo (Dropdown Select) -->
-        <div>
-          <label for="form-id-vehiculo" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
-            Vehículo del Cliente <span class="text-secondary">*</span>
-          </label>
-          <div class="flex gap-2">
-            <select
-              id="form-id-vehiculo"
-              required
-              class="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition bg-white"
-            >
-              <option value="" disabled selected>Selecciona un vehículo...</option>
-              <!-- Populated dynamically -->
-            </select>
-            <a
-              href="/admin/vehiculos"
-              target="_blank"
-              class="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold flex items-center shrink-0 transition"
-              title="Ir a registrar vehículo"
-            >
-              + Vehículo
-            </a>
-          </div>
-        </div>
 
-        <!-- Descripción -->
-        <div>
-          <label for="form-descripcion" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
-            Descripción del Trabajo <span class="text-secondary">*</span>
-          </label>
-          <textarea
-            id="form-descripcion"
-            required
-            rows="3"
-            placeholder="Detalla las reparaciones o mantenimientos a realizar (ej. Afinación mayor, cambio de balatas, rectificado de discos...)"
-            class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
-          ></textarea>
-        </div>
+            
+            <div class="col-span-1 md:col-span-2">
+              <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción <span class="text-[#E63946]">*</span></label>
+              <textarea id="descripcion" name="descripcion" rows="2" required class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]"></textarea>
+            </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <!-- Costo -->
-          <div>
-            <label for="form-costo" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
-              Costo (MXN) <span class="text-secondary">*</span>
-            </label>
-            <div class="relative">
-              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500 font-bold">
-                $
-              </span>
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                id="form-costo"
-                required
-                placeholder="0.00"
-                class="w-full pl-8 pr-3.5 py-2 rounded-xl border border-gray-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
-              />
+            <!-- Dynamic Fields Container -->
+            <div id="dynamicFieldsContainer" class="col-span-1 md:col-span-2 space-y-4 border-t border-b border-gray-100 py-4 hidden bg-gray-50 px-4 rounded-md">
+              <h3 class="text-sm font-medium text-[#1E3A5F] mb-3">Campos Específicos</h3>
+              <div id="dynamicFields" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+
+            <div>
+              <label for="km_entrada" class="block text-sm font-medium text-gray-700 mb-1">Kilometraje de Entrada <span class="text-[#E63946]">*</span></label>
+              <input type="number" id="km_entrada" name="km_entrada" required class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]">
+            </div>
+
+            <div>
+              <label for="costo" class="block text-sm font-medium text-gray-700 mb-1">Costo (MXN)</label>
+              <input type="number" id="costo" name="costo" step="0.01" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]">
+            </div>
+
+            <div>
+              <label for="fecha_ingreso" class="block text-sm font-medium text-gray-700 mb-1">Fecha Ingreso <span class="text-[#E63946]">*</span></label>
+              <input type="date" id="fecha_ingreso" name="fecha_ingreso" required class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]">
+            </div>
+
+            <div>
+              <label for="fecha_entrega" class="block text-sm font-medium text-gray-700 mb-1">Fecha Entrega</label>
+              <input type="date" id="fecha_entrega" name="fecha_entrega" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]">
+            </div>
+
+            <div class="col-span-1 md:col-span-2">
+              <label for="notas" class="block text-sm font-medium text-gray-700 mb-1">Notas</label>
+              <textarea id="notas" name="notas" rows="2" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]"></textarea>
             </div>
           </div>
-
-          <!-- Km Entrada -->
-          <div>
-            <label for="form-km-entrada" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
-              Kilometraje de Entrada
-            </label>
-            <input
-              type="number"
-              id="form-km-entrada"
-              min="0"
-              placeholder="Ej. 75200"
-              class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
-            />
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <!-- Fecha Ingreso -->
-          <div>
-            <label for="form-fecha-ingreso" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
-              Fecha de Ingreso <span class="text-secondary">*</span>
-            </label>
-            <input
-              type="date"
-              id="form-fecha-ingreso"
-              required
-              class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
-            />
-          </div>
-
-          <!-- Fecha Entrega -->
-          <div>
-            <div class="flex items-center justify-between mb-1">
-              <label for="form-fecha-entrega" class="block text-xs font-bold uppercase tracking-wider text-gray-700">
-                Fecha de Entrega
-              </label>
-              <button
-                type="button"
-                id="btn-set-entrega-today"
-                class="text-[11px] text-secondary hover:underline font-semibold"
-              >
-                Hoy
-              </button>
-            </div>
-            <input
-              type="date"
-              id="form-fecha-entrega"
-              class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
-            />
-            <p class="text-[11px] text-gray-400 mt-1">
-              Dejar vacío si el trabajo está <strong>En proceso</strong>.
-            </p>
-          </div>
-        </div>
-
-        <!-- Notas adicionales -->
-        <div>
-          <label for="form-notas" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
-            Notas u Observaciones
-          </label>
-          <textarea
-            id="form-notas"
-            rows="2"
-            placeholder="Piezas cotizadas, recomendaciones para la próxima visita, etc."
-            class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
-          ></textarea>
-        </div>
-
-        <!-- Modal Footer Buttons -->
-        <div class="pt-4 border-t border-gray-100 flex items-center justify-end gap-3">
-          <button
-            type="button"
-            id="btn-cancel-modal"
-            class="px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition"
-          >
-            Cancelar
-          </button>
-          <button
-            type="submit"
-            id="btn-submit-form"
-            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold bg-primary hover:bg-primary/90 text-white shadow-sm transition transform active:scale-95"
-          >
-            <span id="btn-submit-text">Guardar Trabajo</span>
-            <span id="btn-submit-spinner" class="hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
+      
+      <div class="px-6 py-4 border-t border-gray-100 bg-gray-50 flex justify-end gap-3 rounded-b-lg">
+        <button type="button" class="close-modal px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded hover:bg-gray-50 transition-colors">
+          Cancelar
+        </button>
+        <button type="submit" form="trabajoForm" class="px-4 py-2 bg-[#1E3A5F] text-white rounded hover:bg-[#1E3A5F]/90 transition-colors flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+          Guardar
+        </button>
+      </div>
     </div>
   </div>
-</AdminLayout>
+
+  <!-- Detail Modal -->
+  <div id="detailModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col">
+      <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-[#F8F9FA] rounded-t-lg">
+        <h2 class="text-xl font-bold text-[#1E3A5F]">Detalle de Trabajo</h2>
+        <button type="button" class="close-detail-modal text-gray-400 hover:text-gray-600 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <div class="p-6 overflow-y-auto flex-1">
+        <div id="detailContent" class="space-y-6">
+          <!-- Inyectado por JS -->
+        </div>
+      </div>
+      
+      <div class="px-6 py-4 border-t border-gray-100 bg-gray-50 flex justify-end gap-3 rounded-b-lg">
+        <button type="button" class="close-detail-modal px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded hover:bg-gray-50 transition-colors">
+          Cerrar
+        </button>
+        <button type="button" id="btn-edit-from-view" class="px-4 py-2 bg-[#1E3A5F] text-white rounded hover:bg-[#1E3A5F]/90 transition-colors flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
+          Editar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div id="deleteModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+      <div class="p-6 text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-[#E63946] mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">¿Eliminar trabajo?</h3>
+        <p class="text-gray-500 mb-6">Esta acción no se puede deshacer. ¿Estás seguro que deseas eliminar este trabajo?</p>
+        <div class="flex justify-center gap-3">
+          <button type="button" class="close-delete-modal px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded hover:bg-gray-50 transition-colors">
+            Cancelar
+          </button>
+          <button type="button" id="confirmDeleteBtn" class="px-4 py-2 bg-[#E63946] text-white rounded hover:bg-[#E63946]/90 transition-colors">
+            Sí, eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-4 right-4 transform translate-y-full opacity-0 transition-all duration-300 z-50">
+    <div class="bg-white border-l-4 rounded shadow-lg px-4 py-3 flex items-center min-w-[300px]">
+      <div id="toastIcon" class="mr-3"></div>
+      <div>
+        <p id="toastTitle" class="font-bold text-sm"></p>
+        <p id="toastMessage" class="text-sm text-gray-600"></p>
+      </div>
+    </div>
+  </div>
+
+
 
 <script>
   import { createClient } from '@supabase/supabase-js';
-
+  
   const supabase = createClient(
     'https://zsddtosxnfqmbyxptkfs.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzZGR0b3N4bmZxbWJ5eHB0a2ZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NTc5MjEsImV4cCI6MjEwNDIzMzkyMX0.x7Oysn4OW3p5_Lwaj87vjdKOWvRyfeXKuQhGsO7XjGw'
   );
 
-  interface VehiculoOption {
-    id_vehiculo: number;
-    marca: string;
-    modelo: string;
-    clientes?: {
-      nombre: string;
-      apellido: string;
-    } | null;
-  }
-
-  interface Trabajo {
-    id_trabajo: number;
-    id_vehiculo: number;
-    descripcion: string;
-    costo: number;
-    km_entrada?: number | null;
-    fecha_ingreso: string;
-    fecha_entrega?: string | null;
-    notas?: string | null;
-    fecha_registro?: string;
-    vehiculos?: {
-      marca: string;
-      modelo: string;
-      clientes?: {
-        nombre: string;
-        apellido: string;
-      } | null;
-    } | null;
-  }
-
-  let trabajosList: Trabajo[] = [];
-  let vehiculosOptions: VehiculoOption[] = [];
-  let toastTimer: any = null;
+  let trabajos = [];
+  let tiposTrabajo = [];
+  let vehiculos = [];
+  let currentTrabajoId = null;
+  let dynamicFieldDefs = [];
 
   // DOM Elements
-  const searchInput = document.getElementById('search-input') as HTMLInputElement;
-  const filterEstado = document.getElementById('filter-estado') as HTMLSelectElement;
-  const trabajoCountBadge = document.getElementById('trabajo-count-badge');
-  const tableLoading = document.getElementById('table-loading');
-  const tableContainer = document.getElementById('table-container');
-  const tableBody = document.getElementById('trabajos-table-body');
-  const emptyState = document.getElementById('empty-state');
-  const modal = document.getElementById('trabajo-modal');
-  const modalTitle = document.getElementById('modal-title');
-  const trabajoForm = document.getElementById('trabajo-form') as HTMLFormElement;
-  const formTrabajoId = document.getElementById('form-trabajo-id') as HTMLInputElement;
-  const formIdVehiculo = document.getElementById('form-id-vehiculo') as HTMLSelectElement;
-  const formDescripcion = document.getElementById('form-descripcion') as HTMLTextAreaElement;
-  const formCosto = document.getElementById('form-costo') as HTMLInputElement;
-  const formKmEntrada = document.getElementById('form-km-entrada') as HTMLInputElement;
-  const formFechaIngreso = document.getElementById('form-fecha-ingreso') as HTMLInputElement;
-  const formFechaEntrega = document.getElementById('form-fecha-entrega') as HTMLInputElement;
-  const formNotas = document.getElementById('form-notas') as HTMLTextAreaElement;
-  const btnSubmitText = document.getElementById('btn-submit-text');
-  const btnSubmitSpinner = document.getElementById('btn-submit-spinner');
-  const btnSubmitForm = document.getElementById('btn-submit-form') as HTMLButtonElement;
-  const btnSetEntregaToday = document.getElementById('btn-set-entrega-today');
+  const loadingState = document.getElementById('loadingState');
+  const tableContainer = document.getElementById('tableContainer');
+  const tableBody = document.getElementById('tableBody');
+  const emptyState = document.getElementById('emptyState');
+  const searchInput = document.getElementById('searchInput');
+  const statusFilter = document.getElementById('statusFilter');
+  
+  const formModal = document.getElementById('formModal');
+  const trabajoForm = document.getElementById('trabajoForm');
+  const modalTitle = document.getElementById('modalTitle');
+  const btnNuevoTrabajo = document.getElementById('btnNuevoTrabajo');
+  
+  const detailModal = document.getElementById('detailModal');
+  const detailContent = document.getElementById('detailContent');
+  
+  const deleteModal = document.getElementById('deleteModal');
+  const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+  
+  const dynamicFieldsContainer = document.getElementById('dynamicFieldsContainer');
+  const dynamicFields = document.getElementById('dynamicFields');
+  const idTipoTrabajoSelect = document.getElementById('id_tipo_trabajo');
 
-  function showToast(message: string, isSuccess = true) {
-    const toast = document.getElementById('toast');
-    const toastIcon = document.getElementById('toast-icon');
-    const toastMessage = document.getElementById('toast-message');
-
-    if (!toast || !toastIcon || !toastMessage) return;
-    if (toastTimer) clearTimeout(toastTimer);
-
-    toastMessage.textContent = message;
-    if (isSuccess) {
-      toastIcon.textContent = '✅';
-      toast.className =
-        'fixed bottom-5 right-5 z-50 max-w-sm w-full p-4 rounded-xl shadow-2xl text-sm font-medium transition-all duration-300 transform translate-y-0 opacity-100 flex items-center justify-between gap-3 bg-[#2D6A4F] text-white border-green-700';
-    } else {
-      toastIcon.textContent = '⚠️';
-      toast.className =
-        'fixed bottom-5 right-5 z-50 max-w-sm w-full p-4 rounded-xl shadow-2xl text-sm font-medium transition-all duration-300 transform translate-y-0 opacity-100 flex items-center justify-between gap-3 bg-[#E63946] text-white border-red-700';
-    }
-
-    toastTimer = setTimeout(() => {
-      toast.classList.add('opacity-0', 'translate-y-4');
-      setTimeout(() => toast.classList.add('hidden'), 300);
-    }, 4000);
-  }
-
-  const toastClose = document.getElementById('toast-close');
-  if (toastClose) {
-    toastClose.addEventListener('click', () => {
-      const toast = document.getElementById('toast');
-      if (toast) {
-        toast.classList.add('opacity-0', 'translate-y-4');
-        setTimeout(() => toast.classList.add('hidden'), 300);
-      }
-    });
-  }
-
-  function getTodayString(): string {
-    const d = new Date();
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
-
-  function formatDate(dateStr: string | null | undefined): string {
-    if (!dateStr) return '—';
-    const parts = dateStr.split('T')[0].split('-');
-    if (parts.length === 3) {
-      return `${parts[2]}/${parts[1]}/${parts[0]}`;
-    }
-    const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return dateStr;
-    const day = String(d.getDate()).padStart(2, '0');
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const year = d.getFullYear();
+  // Format Helpers
+  const formatCurrency = (val) => new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(val || 0);
+  const formatDate = (dateStr) => {
+    if (!dateStr) return '-';
+    const [year, month, day] = dateStr.split('T')[0].split('-');
     return `${day}/${month}/${year}`;
-  }
+  };
+  const formatNumber = (num) => new Intl.NumberFormat('es-MX').format(num || 0);
 
-  function formatCurrency(amount: number | string | null | undefined): string {
-    const num = parseFloat(String(amount ?? 0)) || 0;
-    return new Intl.NumberFormat('es-MX', {
-      style: 'currency',
-      currency: 'MXN',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(num);
-  }
+  // Initialize
+  async function init() {
+    showLoading(true);
+    await Promise.all([loadTrabajos(), loadTiposTrabajo(), loadVehiculos()]);
+    
+    // Set today as default for fecha_ingreso
+    document.getElementById('fecha_ingreso').valueAsDate = new Date();
+    
+    setupEventListeners();
+    showLoading(false);
 
-  function formatKm(km: number | string | null | undefined): string {
-    if (km === null || km === undefined || km === '') return '—';
-    const n = parseInt(String(km), 10);
-    if (isNaN(n)) return '—';
-    return `${n.toLocaleString('es-MX')} km`;
-  }
-
-  async function loadVehiculosForSelect() {
-    try {
-      const { data, error } = await supabase
-        .from('vehiculos')
-        .select('*, clientes(nombre, apellido)')
-        .order('marca', { ascending: true });
-
-      if (error) throw error;
-      vehiculosOptions = data || [];
-      populateVehiculoDropdown();
-    } catch (err) {
-      console.error('Error cargando vehículos para select:', err);
-    }
-  }
-
-  function populateVehiculoDropdown(selectedId?: number) {
-    if (!formIdVehiculo) return;
-    formIdVehiculo.innerHTML = '<option value="" disabled>Selecciona un vehículo...</option>';
-
-    if (vehiculosOptions.length === 0) {
-      const opt = document.createElement('option');
-      opt.disabled = true;
-      opt.textContent = 'No hay vehículos registrados en el taller';
-      formIdVehiculo.appendChild(opt);
-      return;
-    }
-
-    vehiculosOptions.forEach((v) => {
-      const opt = document.createElement('option');
-      opt.value = String(v.id_vehiculo);
-      const marcaModelo = `${v.marca || ''} ${v.modelo || ''}`.trim();
-      const duenio = v.clientes ? `${v.clientes.nombre} ${v.clientes.apellido}`.trim() : 'Sin dueño';
-      opt.textContent = `${marcaModelo} — ${duenio}`;
-      if (selectedId && v.id_vehiculo === selectedId) {
-        opt.selected = true;
+    // Auto-open logic after everything is loaded
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('new') === 'true') {
+      openFormModal();
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (urlParams.get('view')) {
+      const viewId = parseInt(urlParams.get('view'), 10);
+      if (window.viewTrabajo && !isNaN(viewId)) {
+        window.viewTrabajo(viewId);
       }
-      formIdVehiculo.appendChild(opt);
-    });
-
-    if (!selectedId) {
-      formIdVehiculo.selectedIndex = 0;
+      window.history.replaceState({}, document.title, window.location.pathname);
     }
   }
 
-  function openCreateModal() {
-    if (!modal) return;
-    trabajoForm.reset();
-    formTrabajoId.value = '';
-    formFechaIngreso.value = getTodayString();
-    formFechaEntrega.value = '';
-    populateVehiculoDropdown();
-
-    if (modalTitle) modalTitle.textContent = 'Nuevo Trabajo';
-    if (btnSubmitText) btnSubmitText.textContent = 'Guardar Trabajo';
-    modal.classList.remove('hidden');
-    formDescripcion.focus();
-  }
-
-  function openEditModal(t: Trabajo) {
-    if (!modal) return;
-    trabajoForm.reset();
-    formTrabajoId.value = String(t.id_trabajo);
-    populateVehiculoDropdown(t.id_vehiculo);
-
-    formDescripcion.value = t.descripcion || '';
-    formCosto.value = t.costo !== undefined && t.costo !== null ? String(t.costo) : '0';
-    formKmEntrada.value = t.km_entrada !== undefined && t.km_entrada !== null ? String(t.km_entrada) : '';
-    formFechaIngreso.value = t.fecha_ingreso ? t.fecha_ingreso.split('T')[0] : getTodayString();
-    formFechaEntrega.value = t.fecha_entrega ? t.fecha_entrega.split('T')[0] : '';
-    formNotas.value = t.notas || '';
-
-    if (modalTitle) modalTitle.textContent = 'Editar Trabajo';
-    if (btnSubmitText) btnSubmitText.textContent = 'Actualizar Trabajo';
-    modal.classList.remove('hidden');
-    formDescripcion.focus();
-  }
-
-  function closeModal() {
-    if (modal) modal.classList.add('hidden');
-    trabajoForm.reset();
-  }
-
-  function renderTable(trabajos: Trabajo[]) {
-    if (!tableBody || !emptyState || !trabajoCountBadge) return;
-
-    tableBody.innerHTML = '';
-    trabajoCountBadge.textContent = `${trabajos.length} ${trabajos.length === 1 ? 'trabajo' : 'trabajos'}`;
-
-    if (trabajos.length === 0) {
-      emptyState.classList.remove('hidden');
-      return;
+  function showLoading(show) {
+    if (show) {
+      loadingState.classList.remove('hidden');
+      tableContainer.classList.add('hidden');
+    } else {
+      loadingState.classList.add('hidden');
+      tableContainer.classList.remove('hidden');
+      renderTable();
     }
-
-    emptyState.classList.add('hidden');
-
-    trabajos.forEach((t) => {
-      const tr = document.createElement('tr');
-      tr.className = 'hover:bg-gray-50/80 transition-colors group';
-
-      const fechaIngresoDisplay = formatDate(t.fecha_ingreso);
-      const vehiculo = t.vehiculos;
-      const vehiculoDisplay = vehiculo
-        ? `${vehiculo.marca || ''} ${vehiculo.modelo || ''}`.trim() || 'Vehículo s/d'
-        : 'Vehículo s/d';
-      const duenioDisplay = vehiculo?.clientes
-        ? `${vehiculo.clientes.nombre} ${vehiculo.clientes.apellido}`.trim()
-        : 'Dueño no especificado';
-
-      const descripcionDisplay = t.descripcion || 'Sin descripción';
-      const costoDisplay = formatCurrency(t.costo);
-      const kmDisplay = formatKm(t.km_entrada);
-
-      const isEntregado = Boolean(t.fecha_entrega);
-      const estadoBadge = isEntregado
-        ? `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#2D6A4F]/15 text-[#2D6A4F] border border-[#2D6A4F]/30" title="Entregado el: ${formatDate(t.fecha_entrega)}">
-            <span class="w-1.5 h-1.5 rounded-full bg-[#2D6A4F]"></span> Entregado
-           </span>`
-        : `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#F4A261]/20 text-[#B75D14] border border-[#F4A261]/40" title="En taller pendiente de entrega">
-            <span class="w-1.5 h-1.5 rounded-full bg-[#F4A261] animate-pulse"></span> En proceso
-           </span>`;
-
-      tr.innerHTML = `
-        <td class="py-3.5 px-4 text-xs font-medium text-gray-700 whitespace-nowrap">${fechaIngresoDisplay}</td>
-        <td class="py-3.5 px-4 whitespace-nowrap">
-          <p class="font-bold text-primary">${vehiculoDisplay}</p>
-          <p class="text-xs text-gray-500">${duenioDisplay}</p>
-        </td>
-        <td class="py-3.5 px-4 text-xs text-gray-700 max-w-[240px]">
-          <div class="line-clamp-2" title="${descripcionDisplay}">
-            ${descripcionDisplay}
-          </div>
-          ${t.notas ? `<p class="text-[11px] text-gray-400 italic mt-0.5 truncate">Nota: ${t.notas}</p>` : ''}
-        </td>
-        <td class="py-3.5 px-4 text-xs font-bold text-gray-900 whitespace-nowrap">${costoDisplay}</td>
-        <td class="py-3.5 px-4 text-xs text-gray-600 whitespace-nowrap">${kmDisplay}</td>
-        <td class="py-3.5 px-4 text-center whitespace-nowrap">${estadoBadge}</td>
-        <td class="py-3.5 px-4 text-center whitespace-nowrap">
-          <div class="inline-flex items-center gap-1.5">
-            <button
-              type="button"
-              class="btn-edit p-1.5 rounded-lg text-gray-500 hover:text-primary hover:bg-primary/10 transition"
-              title="Editar trabajo"
-              data-id="${t.id_trabajo}"
-            >
-              ✏️
-            </button>
-            <button
-              type="button"
-              class="btn-delete p-1.5 rounded-lg text-gray-500 hover:text-secondary hover:bg-secondary/10 transition"
-              title="Eliminar trabajo"
-              data-id="${t.id_trabajo}"
-              data-desc="${descripcionDisplay}"
-            >
-              🗑️
-            </button>
-          </div>
-        </td>
-      `;
-
-      const editBtn = tr.querySelector('.btn-edit');
-      editBtn?.addEventListener('click', () => openEditModal(t));
-
-      const deleteBtn = tr.querySelector('.btn-delete');
-      deleteBtn?.addEventListener('click', () => deleteTrabajo(t.id_trabajo, descripcionDisplay));
-
-      tableBody.appendChild(tr);
-    });
   }
 
-  function filterTrabajos() {
-    const term = (searchInput?.value || '').toLowerCase().trim();
-    const estadoFilter = filterEstado?.value || 'todos';
-
-    let filtered = trabajosList;
-
-    // Filter by estado dropdown
-    if (estadoFilter === 'proceso') {
-      filtered = filtered.filter((t) => !t.fecha_entrega);
-    } else if (estadoFilter === 'entregado') {
-      filtered = filtered.filter((t) => Boolean(t.fecha_entrega));
+  // Load Data
+  async function loadTrabajos() {
+    const { data, error } = await supabase
+      .from('trabajos')
+      .select('*, tipos_trabajo(nombre, descripcion, campos_extra), vehiculos(marca, modelo, id_cliente, clientes(nombre, apellido))')
+      .order('fecha_ingreso', { ascending: false });
+      
+    if (error) {
+      showToast('Error', 'No se pudieron cargar los trabajos', 'error');
+      console.error(error);
+    } else {
+      trabajos = data || [];
     }
+  }
 
-    // Filter by search text
-    if (term) {
-      filtered = filtered.filter((t) => {
-        const desc = (t.descripcion || '').toLowerCase();
-        const notas = (t.notas || '').toLowerCase();
-        const costo = String(t.costo || '').toLowerCase();
-        const km = String(t.km_entrada || '').toLowerCase();
-        const marca = (t.vehiculos?.marca || '').toLowerCase();
-        const modelo = (t.vehiculos?.modelo || '').toLowerCase();
-        const duenio = t.vehiculos?.clientes
-          ? `${t.vehiculos.clientes.nombre} ${t.vehiculos.clientes.apellido}`.toLowerCase()
-          : '';
-        const estadoText = t.fecha_entrega ? 'entregado' : 'en proceso';
-
-        return (
-          desc.includes(term) ||
-          notas.includes(term) ||
-          costo.includes(term) ||
-          km.includes(term) ||
-          marca.includes(term) ||
-          modelo.includes(term) ||
-          `${marca} ${modelo}`.includes(term) ||
-          duenio.includes(term) ||
-          estadoText.includes(term)
-        );
+  async function loadTiposTrabajo() {
+    const { data, error } = await supabase
+      .from('tipos_trabajo')
+      .select('*')
+      .eq('activo', true)
+      .order('nombre');
+      
+    if (!error && data) {
+      tiposTrabajo = data;
+      const select = document.getElementById('id_tipo_trabajo');
+      select.innerHTML = '<option value="">Ninguno (Genérico)</option>';
+      data.forEach(t => {
+        const option = document.createElement('option');
+        option.value = t.id_tipo;
+        option.textContent = t.nombre;
+        option.dataset.campos = JSON.stringify(t.campos_extra || []);
+        option.dataset.desc = t.descripcion || '';
+        select.appendChild(option);
       });
     }
-
-    renderTable(filtered);
   }
 
-  async function loadTrabajos() {
-    try {
-      tableLoading?.classList.remove('hidden');
-      tableContainer?.classList.add('hidden');
-
-      const { data, error } = await supabase
-        .from('trabajos')
-        .select('*, vehiculos(marca, modelo, clientes(nombre, apellido))')
-        .order('id_trabajo', { ascending: false });
-
-      if (error) throw error;
-
-      trabajosList = data || [];
-      filterTrabajos();
-    } catch (err: any) {
-      console.error('Error cargando historial de trabajos:', err);
-      showToast(err.message || 'Error al cargar trabajos', false);
-    } finally {
-      tableLoading?.classList.add('hidden');
-      tableContainer?.classList.remove('hidden');
+  async function loadVehiculos() {
+    const { data, error } = await supabase
+      .from('vehiculos')
+      .select('*, clientes(nombre, apellido)')
+      .order('marca');
+      
+    if (!error && data) {
+      vehiculos = data;
+      const select = document.getElementById('id_vehiculo');
+      select.innerHTML = '<option value="">Seleccione un vehículo</option>';
+      data.forEach(v => {
+        const option = document.createElement('option');
+        option.value = v.id_vehiculo;
+        option.textContent = `${v.marca} ${v.modelo} - Dueño: ${v.clientes?.nombre} ${v.clientes?.apellido}`;
+        select.appendChild(option);
+      });
     }
   }
-
-  async function handleFormSubmit(e: Event) {
-    e.preventDefault();
-
-    const idVehiculoStr = formIdVehiculo.value;
-    const descripcion = formDescripcion.value.trim();
-    const costo = parseFloat(formCosto.value);
-    const km_entrada = formKmEntrada.value ? parseInt(formKmEntrada.value, 10) : null;
-    const fecha_ingreso = formFechaIngreso.value || getTodayString();
-    const fecha_entrega = formFechaEntrega.value ? formFechaEntrega.value : null;
-    const notas = formNotas.value.trim() || null;
-    const id = formTrabajoId.value ? parseInt(formTrabajoId.value, 10) : null;
-
-    if (!idVehiculoStr || !descripcion || isNaN(costo)) {
-      showToast('Por favor completa todos los campos requeridos', false);
-      return;
-    }
-
-    const id_vehiculo = parseInt(idVehiculoStr, 10);
-
-    btnSubmitSpinner?.classList.remove('hidden');
-    btnSubmitForm.disabled = true;
-
-    try {
-      if (id) {
-        // UPDATE
-        const { error } = await supabase
-          .from('trabajos')
-          .update({
-            id_vehiculo,
-            descripcion,
-            costo,
-            km_entrada,
-            fecha_ingreso,
-            fecha_entrega,
-            notas,
-          })
-          .eq('id_trabajo', id);
-
-        if (error) throw error;
-        showToast('Trabajo actualizado exitosamente');
-      } else {
-        // CREATE
-        const { error } = await supabase.from('trabajos').insert([
-          {
-            id_vehiculo,
-            descripcion,
-            costo,
-            km_entrada,
-            fecha_ingreso,
-            fecha_entrega,
-            notas,
-          },
-        ]);
-
-        if (error) throw error;
-        showToast('Trabajo registrado exitosamente');
-      }
-
-      closeModal();
-      await loadTrabajos();
-    } catch (err: any) {
-      console.error('Error guardando trabajo:', err);
-      showToast(err.message || 'Error al guardar el trabajo', false);
-    } finally {
-      btnSubmitSpinner?.classList.add('hidden');
-      btnSubmitForm.disabled = false;
-    }
-  }
-
-  async function deleteTrabajo(id: number, desc: string) {
-    const shortDesc = desc.length > 35 ? `${desc.substring(0, 35)}...` : desc;
-    const ok = confirm(`¿Estás seguro de que deseas eliminar este trabajo?\n\n"${shortDesc}"`);
-    if (!ok) return;
-
-    try {
-      const { error } = await supabase.from('trabajos').delete().eq('id_trabajo', id);
-      if (error) throw error;
-
-      showToast('Trabajo eliminado correctamente');
-      await loadTrabajos();
-    } catch (err: any) {
-      console.error('Error eliminando trabajo:', err);
-      showToast(err.message || 'No se pudo eliminar el trabajo', false);
-    }
-  }
-
-  // Quick set delivery date to today
-  btnSetEntregaToday?.addEventListener('click', () => {
-    formFechaEntrega.value = getTodayString();
-  });
 
   // Event Listeners
-  document.getElementById('btn-open-create-modal')?.addEventListener('click', openCreateModal);
-  document.getElementById('empty-btn-create')?.addEventListener('click', openCreateModal);
-  document.getElementById('btn-close-modal')?.addEventListener('click', closeModal);
-  document.getElementById('btn-cancel-modal')?.addEventListener('click', closeModal);
-  trabajoForm?.addEventListener('submit', handleFormSubmit);
-  searchInput?.addEventListener('input', filterTrabajos);
-  filterEstado?.addEventListener('change', filterTrabajos);
+  function setupEventListeners() {
+    searchInput.addEventListener('input', renderTable);
+    statusFilter.addEventListener('change', renderTable);
+    
+    btnNuevoTrabajo.addEventListener('click', () => openFormModal());
+    
+    document.querySelectorAll('.close-modal').forEach(btn => {
+      btn.addEventListener('click', closeFormModal);
+    });
+    
+    document.querySelectorAll('.close-detail-modal').forEach(btn => {
+      btn.addEventListener('click', () => detailModal.classList.add('hidden'));
+    });
+    
+    document.querySelectorAll('.close-delete-modal').forEach(btn => {
+      btn.addEventListener('click', () => deleteModal.classList.add('hidden'));
+    });
+    
+    trabajoForm.addEventListener('submit', handleFormSubmit);
+    confirmDeleteBtn.addEventListener('click', executeDelete);
+    
+    idTipoTrabajoSelect.addEventListener('change', handleTipoTrabajoChange);
+  }
 
-  modal?.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
-  });
+  async function handleTipoTrabajoChange(e, prefillDetalles = null, isEdit = false) {
+    const selectedOption = idTipoTrabajoSelect.options[idTipoTrabajoSelect.selectedIndex];
+    
+    // Autofill desc if we have a default description for this type.
+    // If it's a new form (not editing an existing one), overwrite it.
+    const descInput = document.getElementById('descripcion');
+    if (!isEdit && selectedOption) {
+      descInput.value = selectedOption.dataset.desc || '';
+    }
 
-  // Initial load
-  loadVehiculosForSelect();
-  loadTrabajos();
+    dynamicFields.innerHTML = '';
+    dynamicFieldDefs = [];
+
+    if (selectedOption.value && selectedOption.dataset.campos) {
+      try {
+        const campos = JSON.parse(selectedOption.dataset.campos);
+        if (campos && campos.length > 0) {
+          dynamicFieldDefs = campos;
+          dynamicFieldsContainer.classList.remove('hidden');
+          
+          for (const campo of campos) {
+            const div = document.createElement('div');
+            
+            const label = document.createElement('label');
+            label.className = 'block text-sm font-medium text-gray-700 mb-1';
+            label.textContent = campo.etiqueta;
+            div.appendChild(label);
+            
+            if (campo.tipo === 'text') {
+              const input = document.createElement('input');
+              input.type = 'text';
+              input.name = `dyn_${campo.nombre}`;
+              input.className = 'block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]';
+              if (prefillDetalles && prefillDetalles[campo.nombre]) {
+                input.value = prefillDetalles[campo.nombre];
+              }
+              div.appendChild(input);
+            } 
+            else if (campo.tipo === 'select') {
+              const select = document.createElement('select');
+              select.name = `dyn_${campo.nombre}`;
+              select.className = 'block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]';
+              
+              const defaultOpt = document.createElement('option');
+              defaultOpt.value = "";
+              defaultOpt.textContent = "Seleccionar...";
+              select.appendChild(defaultOpt);
+              
+              if (campo.opciones) {
+                campo.opciones.forEach(opt => {
+                  const o = document.createElement('option');
+                  o.value = opt;
+                  o.textContent = opt;
+                  select.appendChild(o);
+                });
+              } else if (campo.opciones_tabla) {
+                // Fetch from tabla
+                const { data } = await supabase.from(campo.opciones_tabla).select('*').eq('activo', true);
+                if (data) {
+                  data.forEach(item => {
+                    const o = document.createElement('option');
+                    o.value = item.nombre;
+                    o.textContent = item.nombre;
+                    select.appendChild(o);
+                  });
+                }
+              }
+              
+              if (prefillDetalles && prefillDetalles[campo.nombre]) {
+                select.value = prefillDetalles[campo.nombre];
+              }
+              div.appendChild(select);
+            }
+            else if (campo.tipo === 'checkbox') {
+              const wrapper = document.createElement('div');
+              wrapper.className = 'flex items-center mt-2';
+              const input = document.createElement('input');
+              input.type = 'checkbox';
+              input.name = `dyn_${campo.nombre}`;
+              input.className = 'h-4 w-4 text-[#1E3A5F] focus:ring-[#1E3A5F] border-gray-300 rounded';
+              if (prefillDetalles && prefillDetalles[campo.nombre]) {
+                input.checked = prefillDetalles[campo.nombre] === true;
+              }
+              
+              const label2 = document.createElement('label');
+              label2.className = 'ml-2 block text-sm text-gray-900';
+              label2.textContent = "Sí / Activo";
+              
+              wrapper.appendChild(input);
+              wrapper.appendChild(label2);
+              div.appendChild(wrapper);
+            }
+            
+            dynamicFields.appendChild(div);
+          }
+        } else {
+          dynamicFieldsContainer.classList.add('hidden');
+        }
+      } catch (e) {
+        console.error("Error parsing campos_extra", e);
+        dynamicFieldsContainer.classList.add('hidden');
+      }
+    } else {
+      dynamicFieldsContainer.classList.add('hidden');
+    }
+  }
+
+  // Rendering
+  function renderTable() {
+    const term = searchInput.value.toLowerCase();
+    const status = statusFilter.value;
+    
+    const filtered = trabajos.filter(t => {
+      const matchSearch = 
+        (t.vehiculos?.marca || '').toLowerCase().includes(term) ||
+        (t.vehiculos?.modelo || '').toLowerCase().includes(term) ||
+        (t.vehiculos?.clientes?.nombre || '').toLowerCase().includes(term) ||
+        (t.descripcion || '').toLowerCase().includes(term);
+        
+      let matchStatus = true;
+      const estadoActual = t.estado || 'En proceso';
+      if (status === 'in-progress') matchStatus = estadoActual !== 'Entregado' && estadoActual !== 'Terminado';
+      if (status === 'completed') matchStatus = estadoActual === 'Entregado' || estadoActual === 'Terminado';
+      
+      return matchSearch && matchStatus;
+    });
+
+    tableBody.innerHTML = '';
+    
+    if (filtered.length === 0) {
+      emptyState.classList.remove('hidden');
+      tableBody.parentElement.classList.add('hidden');
+    } else {
+      emptyState.classList.add('hidden');
+      tableBody.parentElement.classList.remove('hidden');
+      
+      filtered.forEach(t => {
+        const estadoReal = t.estado === 'Entregado' || t.fecha_entrega ? 'Entregado' : (t.estado || 'En proceso');
+        const isCompleted = estadoReal === 'Entregado' || estadoReal === 'Terminado';
+        const badgeColor = isCompleted ? 'bg-[#2D6A4F]/10 text-[#2D6A4F]' : 'bg-[#F4A261]/10 text-[#F4A261]';
+        
+        const vehiculo = t.vehiculos ? `${t.vehiculos.marca} ${t.vehiculos.modelo}` : '-';
+        const cliente = t.vehiculos?.clientes ? `${t.vehiculos.clientes.nombre} ${t.vehiculos.clientes.apellido}` : '-';
+        const vehiculoUrl = `/admin/vehiculos/detalle?id=${t.id_vehiculo}`;
+
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-gray-50 transition-colors';
+        tr.innerHTML = `
+          <td class="px-4 py-3">${formatDate(t.fecha_ingreso)}</td>
+          <td class="px-4 py-3">
+            <a href="${vehiculoUrl}" class="font-medium text-[#1E3A5F] hover:underline">${vehiculo}</a>
+          </td>
+          <td class="px-4 py-3 text-gray-600">${t.tipos_trabajo?.nombre || 'Genérico'}</td>
+          <td class="px-4 py-3 max-w-xs truncate" title="${t.descripcion}">${t.descripcion}</td>
+          <td class="px-4 py-3 font-medium">${formatCurrency(t.costo)}</td>
+          <td class="px-4 py-3 text-gray-600">${formatNumber(t.km_entrada)}</td>
+          <td class="px-4 py-3">
+            <span class="px-2.5 py-1 rounded-full text-xs font-medium ${badgeColor}">
+              ${estadoReal}
+            </span>
+          </td>
+          <td class="px-4 py-3 text-right">
+            <div class="flex justify-end gap-2">
+              <button onclick="window.viewTrabajo(${t.id_trabajo})" class="p-1 text-gray-400 hover:text-[#1E3A5F] transition-colors" title="Ver detalles">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </button>
+              <button onclick="window.editTrabajo(${t.id_trabajo})" class="p-1 text-gray-400 hover:text-blue-600 transition-colors" title="Editar">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+              </button>
+              <button onclick="window.confirmDelete(${t.id_trabajo})" class="p-1 text-gray-400 hover:text-[#E63946] transition-colors" title="Eliminar">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          </td>
+        `;
+        tableBody.appendChild(tr);
+      });
+    }
+  }
+
+  // Modals Actions
+  function openFormModal(trabajo = null) {
+    trabajoForm.reset();
+    dynamicFields.innerHTML = '';
+    dynamicFieldsContainer.classList.add('hidden');
+    dynamicFieldDefs = [];
+    
+    if (trabajo) {
+      modalTitle.textContent = 'Editar Trabajo';
+      document.getElementById('id_trabajo').value = trabajo.id_trabajo;
+      document.getElementById('id_vehiculo').value = trabajo.id_vehiculo;
+      document.getElementById('id_tipo_trabajo').value = trabajo.id_tipo_trabajo || '';
+      document.getElementById('descripcion').value = trabajo.descripcion;
+      document.getElementById('km_entrada').value = trabajo.km_entrada;
+      document.getElementById('costo').value = trabajo.costo || '';
+      document.getElementById('fecha_ingreso').value = trabajo.fecha_ingreso ? trabajo.fecha_ingreso.split('T')[0] : '';
+      document.getElementById('fecha_entrega').value = trabajo.fecha_entrega ? trabajo.fecha_entrega.split('T')[0] : '';
+      document.getElementById('notas').value = trabajo.notas || '';
+      
+      // Trigger dynamic fields with prefill
+      handleTipoTrabajoChange(null, trabajo.detalles, true);
+    } else {
+      modalTitle.textContent = 'Nuevo Trabajo';
+      document.getElementById('id_trabajo').value = '';
+      document.getElementById('fecha_ingreso').valueAsDate = new Date();
+    }
+    
+    formModal.classList.remove('hidden');
+  }
+
+  function closeFormModal() {
+    formModal.classList.add('hidden');
+    trabajoForm.reset();
+  }
+
+  window.editTrabajo = (id) => {
+    const trabajo = trabajos.find(t => t.id_trabajo === id);
+    if (trabajo) openFormModal(trabajo);
+  };
+
+  window.viewTrabajo = (id) => {
+    const t = trabajos.find(x => x.id_trabajo === id);
+    if (!t) return;
+    
+    const estadoReal = t.estado === 'Entregado' || t.fecha_entrega ? 'Entregado' : (t.estado || 'En proceso');
+    const isCompleted = estadoReal === 'Entregado' || estadoReal === 'Terminado';
+    const badgeColor = isCompleted ? 'bg-[#2D6A4F]/10 text-[#2D6A4F]' : 'bg-[#F4A261]/10 text-[#F4A261]';
+    
+    const detallesHtml = Object.keys(t.detalles || {}).map(k => {
+      // Intenta encontrar la etiqueta amigable si coincide con el tipo
+      let etiqueta = k;
+      if (t.tipos_trabajo?.campos_extra) {
+        const c = t.tipos_trabajo.campos_extra.find(x => x.nombre === k);
+        if (c) etiqueta = c.etiqueta;
+      }
+      const val = t.detalles[k];
+      return `<div class="bg-gray-50 px-4 py-2 rounded">
+        <span class="block text-xs text-gray-500 capitalize">${etiqueta.replace(/_/g, ' ')}</span>
+        <span class="font-medium text-gray-900">${val === true ? 'Sí' : (val === false ? 'No' : val)}</span>
+      </div>`;
+    }).join('');
+
+    detailContent.innerHTML = `
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="text-sm font-medium text-gray-500 mb-1">Vehículo</h3>
+          <p class="text-lg font-medium text-[#1E3A5F]">${t.vehiculos?.marca} ${t.vehiculos?.modelo}</p>
+          <p class="text-sm text-gray-600">Cliente: ${t.vehiculos?.clientes?.nombre} ${t.vehiculos?.clientes?.apellido}</p>
+        </div>
+        <div>
+          <h3 class="text-sm font-medium text-gray-500 mb-1">Estado</h3>
+          <span class="px-2.5 py-1 rounded-full text-sm font-medium ${badgeColor}">
+            ${estadoReal}
+          </span>
+        </div>
+        
+        <div class="md:col-span-2">
+          <h3 class="text-sm font-medium text-gray-500 mb-1">Descripción del Trabajo</h3>
+          <div class="bg-gray-50 p-3 rounded-md border border-gray-100">
+            <p class="text-gray-800">${t.descripcion}</p>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-medium text-gray-500 mb-1">Tipo de Trabajo</h3>
+          <p class="text-gray-900 font-medium">${t.tipos_trabajo?.nombre || 'Genérico'}</p>
+        </div>
+        
+
+
+        <div>
+          <h3 class="text-sm font-medium text-gray-500 mb-1">Kilometraje</h3>
+          <p class="text-gray-900 font-medium">${formatNumber(t.km_entrada)} km</p>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-medium text-gray-500 mb-1">Costo</h3>
+          <p class="text-gray-900 font-bold">${formatCurrency(t.costo)}</p>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-medium text-gray-500 mb-1">Fecha de Ingreso</h3>
+          <p class="text-gray-900">${formatDate(t.fecha_ingreso)}</p>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-medium text-gray-500 mb-1">Fecha de Entrega</h3>
+          <p class="text-gray-900">${formatDate(t.fecha_entrega) || 'Pendiente'}</p>
+        </div>
+
+        ${Object.keys(t.detalles || {}).length > 0 ? `
+          <div class="md:col-span-2 pt-4 border-t border-gray-100">
+            <h3 class="text-sm font-medium text-[#1E3A5F] mb-3">Detalles Específicos</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+              ${detallesHtml}
+            </div>
+          </div>
+        ` : ''}
+
+        ${t.notas ? `
+          <div class="md:col-span-2 pt-4 border-t border-gray-100">
+            <h3 class="text-sm font-medium text-gray-500 mb-1">Notas Adicionales</h3>
+            <div class="bg-yellow-50 p-3 rounded-md border border-yellow-100">
+              <p class="text-gray-800">${t.notas}</p>
+            </div>
+          </div>
+        ` : ''}
+      </div>
+    `;
+    detailModal.classList.remove('hidden');
+    
+    // Configurar botón de editar
+    const btnEditFromView = document.getElementById('btn-edit-from-view');
+    if (btnEditFromView) {
+      btnEditFromView.onclick = () => {
+        detailModal.classList.add('hidden');
+        window.editTrabajo(id);
+      };
+    }
+  };
+
+  window.confirmDelete = (id) => {
+    currentTrabajoId = id;
+    deleteModal.classList.remove('hidden');
+  };
+
+  // Form Submit
+  async function handleFormSubmit(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(trabajoForm);
+    const data = {
+      id_vehiculo: formData.get('id_vehiculo'),
+      id_tipo_trabajo: formData.get('id_tipo_trabajo') || null,
+      descripcion: formData.get('descripcion'),
+      km_entrada: formData.get('km_entrada'),
+      costo: formData.get('costo') ? parseFloat(formData.get('costo')) : null,
+      fecha_ingreso: formData.get('fecha_ingreso'),
+      fecha_entrega: formData.get('fecha_entrega') || null,
+      notas: formData.get('notas') || null,
+    };
+    
+    data.estado = data.fecha_entrega ? 'Entregado' : 'En proceso';
+    
+    // Extract dynamic fields
+    const detalles = {};
+    dynamicFieldDefs.forEach(campo => {
+      const fieldName = `dyn_${campo.nombre}`;
+      if (campo.tipo === 'checkbox') {
+        detalles[campo.nombre] = formData.has(fieldName);
+      } else {
+        const val = formData.get(fieldName);
+        if (val) detalles[campo.nombre] = val;
+      }
+    });
+    
+    data.detalles = detalles;
+    
+    const id = formData.get('id_trabajo');
+    
+    try {
+      if (id) {
+        const { error } = await supabase.from('trabajos').update(data).eq('id_trabajo', id);
+        if (error) throw error;
+        showToast('Éxito', 'Trabajo actualizado correctamente', 'success');
+      } else {
+        const { error } = await supabase.from('trabajos').insert([data]);
+        if (error) throw error;
+        showToast('Éxito', 'Trabajo registrado correctamente', 'success');
+      }
+      closeFormModal();
+      await loadTrabajos();
+      renderTable();
+    } catch (error) {
+      showToast('Error', 'Ocurrió un error al guardar', 'error');
+      console.error(error);
+    }
+  }
+
+  // Delete
+  async function executeDelete() {
+    if (!currentTrabajoId) return;
+    
+    try {
+      const { error } = await supabase.from('trabajos').delete().eq('id_trabajo', currentTrabajoId);
+      if (error) throw error;
+      
+      showToast('Éxito', 'Trabajo eliminado correctamente', 'success');
+      deleteModal.classList.add('hidden');
+      await loadTrabajos();
+      renderTable();
+    } catch (error) {
+      showToast('Error', 'No se pudo eliminar el trabajo', 'error');
+      console.error(error);
+    }
+  }
+
+  // Toast System
+  function showToast(title, message, type = 'success') {
+    const toast = document.getElementById('toast');
+    const toastTitle = document.getElementById('toastTitle');
+    const toastMessage = document.getElementById('toastMessage');
+    const toastIcon = document.getElementById('toastIcon');
+    
+    toastTitle.textContent = title;
+    toastTitle.className = `font-bold text-sm ${type === 'success' ? 'text-[#2D6A4F]' : 'text-[#E63946]'}`;
+    toastMessage.textContent = message;
+    
+    toast.className = `fixed bottom-4 right-4 transform transition-all duration-300 z-50 rounded shadow-lg px-4 py-3 flex items-center min-w-[300px] border-l-4 ${type === 'success' ? 'bg-white border-[#2D6A4F]' : 'bg-white border-[#E63946]'}`;
+    
+    toastIcon.innerHTML = type === 'success' 
+      ? `<svg class="w-6 h-6 text-[#2D6A4F]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`
+      : `<svg class="w-6 h-6 text-[#E63946]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+    
+    // Animate in
+    requestAnimationFrame(() => {
+      toast.classList.remove('translate-y-full', 'opacity-0');
+    });
+    
+    // Hide after 3s
+    setTimeout(() => {
+      toast.classList.add('translate-y-full', 'opacity-0');
+    }, 3000);
+  }
+
+  // Run init directly
+  init();
 </script>
+</AdminLayout>

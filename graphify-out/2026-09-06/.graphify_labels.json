@@ -1,0 +1,13 @@
+{
+  "0": "package.json",
+  "1": "vehiculos/index.astro",
+  "2": "MainLayout.astro",
+  "3": "AdminLayout.astro",
+  "4": "Header.astro",
+  "5": "dependencies",
+  "6": "tsconfig.json",
+  "7": "rules/graphify.md",
+  "8": "workflows/graphify.md",
+  "9": "Hero.astro",
+  "10": "pages/index.astro"
+}

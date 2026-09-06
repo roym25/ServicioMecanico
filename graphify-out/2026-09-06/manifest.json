@@ -1,0 +1,140 @@
+{
+  "astro.config.mjs": {
+    "mtime": 1788666785.5563698,
+    "seen": 1788668854.084835,
+    "ast_hash": "587a294a5ddda08529949ecb2763e9cd",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1788667939.95573,
+    "seen": 1788668854.0848453,
+    "ast_hash": "8f77b6623a1a3022bc704b4e2d704dd7",
+    "semantic_hash": ""
+  },
+  "src/components/Footer.astro": {
+    "mtime": 1788666868.3568578,
+    "seen": 1788668854.08485,
+    "ast_hash": "2512653f92b6cd14f4c712fd82c5172f",
+    "semantic_hash": ""
+  },
+  "src/components/Header.astro": {
+    "mtime": 1788666858.3492725,
+    "seen": 1788668854.084853,
+    "ast_hash": "f1a85151cedd832dee239b1be2ed5aad",
+    "semantic_hash": ""
+  },
+  "src/components/Hero.astro": {
+    "mtime": 1788666935.7772381,
+    "seen": 1788668854.0848558,
+    "ast_hash": "89a44fde0c31805091431d96d3b891a8",
+    "semantic_hash": ""
+  },
+  "src/components/ServiceCard.astro": {
+    "mtime": 1788666939.6376028,
+    "seen": 1788668854.0848584,
+    "ast_hash": "36dc99d4b7f6cd90b43db91a85d91d9f",
+    "semantic_hash": ""
+  },
+  "src/layouts/AdminLayout.astro": {
+    "mtime": 1788668373.2525487,
+    "seen": 1788668854.0848603,
+    "ast_hash": "d3224338a319c0e47a072ef527242a49",
+    "semantic_hash": ""
+  },
+  "src/layouts/MainLayout.astro": {
+    "mtime": 1788666878.6809683,
+    "seen": 1788668854.0848622,
+    "ast_hash": "594e94cca57b1ce3616881fd56ca158d",
+    "semantic_hash": ""
+  },
+  "src/lib/supabase.ts": {
+    "mtime": 1788668080.8728695,
+    "seen": 1788668854.0848637,
+    "ast_hash": "b1183f302793572a50d4e7acb4ed76e7",
+    "semantic_hash": ""
+  },
+  "src/pages/admin/clientes/index.astro": {
+    "mtime": 1788668391.214777,
+    "seen": 1788668854.0848653,
+    "ast_hash": "474f040cad2b32646796dec62bac45d2",
+    "semantic_hash": ""
+  },
+  "src/pages/admin/index.astro": {
+    "mtime": 1788668370.3945072,
+    "seen": 1788668854.084867,
+    "ast_hash": "a240d2373c1417a3138f601e6a456df4",
+    "semantic_hash": ""
+  },
+  "src/pages/admin/login.astro": {
+    "mtime": 1788668356.9789202,
+    "seen": 1788668854.0848694,
+    "ast_hash": "2659381e29ed050667e9adc700614b0b",
+    "semantic_hash": ""
+  },
+  "src/pages/admin/trabajos/index.astro": {
+    "mtime": 1788668431.7613294,
+    "seen": 1788668854.084871,
+    "ast_hash": "660647ee8940ca9a59fb9778fea49f85",
+    "semantic_hash": ""
+  },
+  "src/pages/admin/vehiculos/index.astro": {
+    "mtime": 1788668408.9101725,
+    "seen": 1788668854.084873,
+    "ast_hash": "205d7869fcfd4ede8e433e6e880f44af",
+    "semantic_hash": ""
+  },
+  "src/pages/contacto.astro": {
+    "mtime": 1788666980.634006,
+    "seen": 1788668854.0848744,
+    "ast_hash": "29bfa70c55ff29693c12d694c4dc530c",
+    "semantic_hash": ""
+  },
+  "src/pages/index.astro": {
+    "mtime": 1788668359.8485634,
+    "seen": 1788668854.0848763,
+    "ast_hash": "d4f36bcf2ec073dbb87c644ce4cf5b37",
+    "semantic_hash": ""
+  },
+  "src/pages/nosotros.astro": {
+    "mtime": 1788666967.995373,
+    "seen": 1788668854.0848787,
+    "ast_hash": "e769901eea74d27e11991c05145a1114",
+    "semantic_hash": ""
+  },
+  "src/pages/servicios.astro": {
+    "mtime": 1788666958.6386347,
+    "seen": 1788668854.0848804,
+    "ast_hash": "d5bfa11e56418acb654034ec15aa3b1d",
+    "semantic_hash": ""
+  },
+  "tsconfig.json": {
+    "mtime": 1788666390.9284537,
+    "seen": 1788668854.0848823,
+    "ast_hash": "cdb935a0df6cf1d722dbce04b1f73403",
+    "semantic_hash": ""
+  },
+  ".agents/rules/graphify.md": {
+    "mtime": 1788665745.6460783,
+    "seen": 1788668854.084884,
+    "ast_hash": "a0e4d192b9e2e17256124dbfc8e24e6a",
+    "semantic_hash": ""
+  },
+  ".agents/workflows/graphify.md": {
+    "mtime": 1788665745.6500158,
+    "seen": 1788668854.0848856,
+    "ast_hash": "a831cf3669f1e6ab85d8a80ebe655f99",
+    "semantic_hash": ""
+  },
+  "fondoindex.jpg": {
+    "mtime": 1747355722.1076524,
+    "seen": 1788668854.0848873,
+    "ast_hash": "ada68c44c279423078b3a383c8934910",
+    "semantic_hash": ""
+  },
+  "public/favicon.svg": {
+    "mtime": 1788666881.744213,
+    "seen": 1788668854.0848901,
+    "ast_hash": "9ce6180ef86c9797c91dd3d7bff2c0b1",
+    "semantic_hash": ""
+  }
+}

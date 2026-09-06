@@ -1,5 +1,4 @@
 ---
-// import AdminLayout from '../../layouts/AdminLayout.astro'
 import AdminLayout from '../../../layouts/AdminLayout.astro';
 ---
 
@@ -12,11 +11,13 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     aria-live="polite"
   >
     <div class="flex items-center gap-2.5">
-      <span id="toast-icon" class="text-xl">✅</span>
+      <span id="toast-icon" class="text-xl">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+      </span>
       <span id="toast-message" class="text-xs sm:text-sm">Operación realizada con éxito</span>
     </div>
     <button id="toast-close" type="button" class="text-gray-400 hover:text-gray-700 p-1">
-      ✕
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
     </button>
   </div>
 
@@ -48,8 +49,8 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           id="btn-open-create-modal"
           class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold bg-secondary hover:bg-secondary/90 text-white shadow-sm hover:shadow transition transform active:scale-95 shrink-0"
         >
-          <span>🚗</span>
-          <span>+ Nuevo Vehículo</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          <span>Nuevo Vehículo</span>
         </button>
       </div>
     </div>
@@ -83,8 +84,8 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
         <!-- Empty state -->
         <div id="empty-state" class="hidden py-16 text-center">
-          <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center text-3xl">
-            🚗
+          <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
           </div>
           <h3 class="text-base font-bold text-gray-800">No se encontraron vehículos</h3>
           <p class="text-xs text-gray-500 mt-1 max-w-sm mx-auto">
@@ -95,7 +96,8 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             id="empty-btn-create"
             class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-secondary text-white hover:bg-secondary/90 transition shadow-sm"
           >
-            <span>➕</span> Registrar Nuevo Vehículo
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            Registrar Nuevo Vehículo
           </button>
         </div>
       </div>
@@ -150,10 +152,10 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <a
               href="/admin/clientes"
               target="_blank"
-              class="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold flex items-center shrink-0 transition"
+              class="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold flex items-center justify-center shrink-0 transition"
               title="Ir a registrar cliente nuevo"
             >
-              + Cliente
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
             </a>
           </div>
         </div>
@@ -164,13 +166,14 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <label for="form-marca" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
               Marca <span class="text-secondary">*</span>
             </label>
-            <input
-              type="text"
+            <select
               id="form-marca"
               required
-              placeholder="Ej. Nissan, Toyota, Ford"
-              class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
-            />
+              class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition bg-white"
+            >
+              <option value="" disabled selected>Selecciona marca...</option>
+              <!-- Options populated dynamically -->
+            </select>
           </div>
 
           <!-- Modelo -->
@@ -208,11 +211,12 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <!-- Km -->
           <div>
             <label for="form-km" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
-              Kilometraje Actual
+              Kilometraje Actual <span class="text-secondary">*</span>
             </label>
             <input
               type="number"
               id="form-km"
+              required
               min="0"
               placeholder="Ej. 75000"
               class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
@@ -228,7 +232,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <input
             type="text"
             id="form-numserie"
-            placeholder="Ej. 3N1AB7AP7HY123456"
+            placeholder="Opcional"
             class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm uppercase focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition font-mono"
           />
         </div>
@@ -270,6 +274,11 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     apellido: string;
   }
 
+  interface MarcaRef {
+    id_marca: number;
+    nombre: string;
+  }
+
   interface Vehiculo {
     id_vehiculo: number;
     id_cliente: number;
@@ -287,6 +296,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
   let vehiculosList: Vehiculo[] = [];
   let clientesOptions: ClienteRef[] = [];
+  let marcasOptions: MarcaRef[] = [];
   let toastTimer: any = null;
 
   // DOM Elements
@@ -301,7 +311,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
   const vehiculoForm = document.getElementById('vehiculo-form') as HTMLFormElement;
   const formVehiculoId = document.getElementById('form-vehiculo-id') as HTMLInputElement;
   const formIdCliente = document.getElementById('form-id-cliente') as HTMLSelectElement;
-  const formMarca = document.getElementById('form-marca') as HTMLInputElement;
+  const formMarca = document.getElementById('form-marca') as HTMLSelectElement;
   const formModelo = document.getElementById('form-modelo') as HTMLInputElement;
   const formAnio = document.getElementById('form-anio') as HTMLInputElement;
   const formKm = document.getElementById('form-km') as HTMLInputElement;
@@ -320,11 +330,11 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
     toastMessage.textContent = message;
     if (isSuccess) {
-      toastIcon.textContent = '✅';
+      toastIcon.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
       toast.className =
         'fixed bottom-5 right-5 z-50 max-w-sm w-full p-4 rounded-xl shadow-2xl text-sm font-medium transition-all duration-300 transform translate-y-0 opacity-100 flex items-center justify-between gap-3 bg-[#2D6A4F] text-white border-green-700';
     } else {
-      toastIcon.textContent = '⚠️';
+      toastIcon.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>';
       toast.className =
         'fixed bottom-5 right-5 z-50 max-w-sm w-full p-4 rounded-xl shadow-2xl text-sm font-medium transition-all duration-300 transform translate-y-0 opacity-100 flex items-center justify-between gap-3 bg-[#E63946] text-white border-red-700';
     }
@@ -367,6 +377,22 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     }
   }
 
+  async function loadMarcasForSelect() {
+    try {
+      const { data, error } = await supabase
+        .from('marcas_vehiculo')
+        .select('id_marca, nombre')
+        .eq('activo', true)
+        .order('nombre', { ascending: true });
+
+      if (error) throw error;
+      marcasOptions = data || [];
+      populateMarcaDropdown();
+    } catch (err) {
+      console.error('Error cargando marcas para el select:', err);
+    }
+  }
+
   function populateClienteDropdown(selectedId?: number) {
     if (!formIdCliente) return;
     formIdCliente.innerHTML = '<option value="" disabled>Selecciona un cliente...</option>';
@@ -394,11 +420,31 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     }
   }
 
+  function populateMarcaDropdown(selectedMarcaName?: string) {
+    if (!formMarca) return;
+    formMarca.innerHTML = '<option value="" disabled>Selecciona marca...</option>';
+
+    marcasOptions.forEach((marca) => {
+      const opt = document.createElement('option');
+      opt.value = marca.nombre; // We store the name in vehiculos table
+      opt.textContent = marca.nombre;
+      if (selectedMarcaName && marca.nombre === selectedMarcaName) {
+        opt.selected = true;
+      }
+      formMarca.appendChild(opt);
+    });
+
+    if (!selectedMarcaName) {
+      formMarca.selectedIndex = 0;
+    }
+  }
+
   function openCreateModal() {
     if (!modal) return;
     vehiculoForm.reset();
     formVehiculoId.value = '';
     populateClienteDropdown();
+    populateMarcaDropdown();
     if (modalTitle) modalTitle.textContent = 'Nuevo Vehículo';
     if (btnSubmitText) btnSubmitText.textContent = 'Guardar Vehículo';
     modal.classList.remove('hidden');
@@ -410,10 +456,11 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     vehiculoForm.reset();
     formVehiculoId.value = String(v.id_vehiculo);
     populateClienteDropdown(v.id_cliente);
-    formMarca.value = v.marca || '';
+    populateMarcaDropdown(v.marca);
+    
     formModelo.value = v.modelo || '';
     formAnio.value = v.anio ? String(v.anio) : '';
-    formKm.value = v.km !== undefined && v.km !== null ? String(v.km) : '0';
+    formKm.value = v.km !== undefined && v.km !== null ? String(v.km) : '';
     formNumserie.value = v.numserie || '';
 
     if (modalTitle) modalTitle.textContent = 'Editar Vehículo';
@@ -442,7 +489,11 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
     vehiculos.forEach((v) => {
       const tr = document.createElement('tr');
-      tr.className = 'hover:bg-gray-50/80 transition-colors group';
+      tr.className = 'hover:bg-gray-50/80 transition-colors group cursor-pointer';
+
+      tr.addEventListener('click', () => {
+        window.location.href = `/admin/vehiculos/detalle?id=${v.id_vehiculo}`;
+      });
 
       const marca = v.marca || '—';
       const modelo = v.modelo || '—';
@@ -466,14 +517,21 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           </span>
         </td>
         <td class="py-3.5 px-4 text-center whitespace-nowrap">
-          <div class="inline-flex items-center gap-1.5">
+          <div class="inline-flex items-center gap-1.5" onclick="event.stopPropagation()">
+            <a
+              href="/admin/vehiculos/detalle?id=${v.id_vehiculo}"
+              class="p-1.5 rounded-lg text-gray-500 hover:text-primary hover:bg-primary/10 transition"
+              title="Ver detalle"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+            </a>
             <button
               type="button"
               class="btn-edit p-1.5 rounded-lg text-gray-500 hover:text-primary hover:bg-primary/10 transition"
               title="Editar vehículo"
               data-id="${v.id_vehiculo}"
             >
-              ✏️
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
             </button>
             <button
               type="button"
@@ -482,17 +540,23 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
               data-id="${v.id_vehiculo}"
               data-desc="${marca} ${modelo}"
             >
-              🗑️
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
             </button>
           </div>
         </td>
       `;
 
       const editBtn = tr.querySelector('.btn-edit');
-      editBtn?.addEventListener('click', () => openEditModal(v));
+      editBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openEditModal(v);
+      });
 
       const deleteBtn = tr.querySelector('.btn-delete');
-      deleteBtn?.addEventListener('click', () => deleteVehiculo(v.id_vehiculo, `${marca} ${modelo}`));
+      deleteBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        deleteVehiculo(v.id_vehiculo, `${marca} ${modelo}`);
+      });
 
       tableBody.appendChild(tr);
     });
@@ -557,13 +621,24 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     const marca = formMarca.value.trim();
     const modelo = formModelo.value.trim();
     const anio = parseInt(formAnio.value, 10);
-    const km = formKm.value ? parseInt(formKm.value, 10) : 0;
+    const km = formKm.value ? parseInt(formKm.value, 10) : null;
     const numserie = formNumserie.value.trim().toUpperCase() || null;
     const id = formVehiculoId.value ? parseInt(formVehiculoId.value, 10) : null;
 
-    if (!idClienteStr || !marca || !modelo || isNaN(anio)) {
+    if (!idClienteStr || !marca || !modelo || isNaN(anio) || km === null) {
       showToast('Por favor completa todos los campos requeridos', false);
       return;
+    }
+
+    if (numserie) {
+      if (numserie.length !== 17) {
+        showToast('El Número de Serie (VIN) debe tener exactamente 17 caracteres', 'error');
+        return;
+      }
+      if (!/^[A-HJ-NPR-Z0-9]{17}$/.test(numserie)) {
+        showToast('El VIN contiene caracteres inválidos (No puede contener I, O, Q)', 'error');
+        return;
+      }
     }
 
     const id_cliente = parseInt(idClienteStr, 10);
@@ -645,6 +720,26 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
   });
 
   // Initial load
-  loadClientesForSelect();
-  loadVehiculos();
+  Promise.all([
+    loadClientesForSelect(),
+    loadMarcasForSelect(),
+    loadVehiculos()
+  ]).then(() => {
+    // Check if we need to auto-open the new or edit modal
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('new') === 'true') {
+      const addBtn = document.getElementById('btn-open-create-modal');
+      if (addBtn) addBtn.click();
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (urlParams.get('edit')) {
+      const editId = parseInt(urlParams.get('edit'), 10);
+      if (!isNaN(editId)) {
+        const vehiculoToEdit = vehiculosList.find(v => v.id_vehiculo === editId);
+        if (vehiculoToEdit) {
+           openEditModal(vehiculoToEdit);
+        }
+      }
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  });
 </script>

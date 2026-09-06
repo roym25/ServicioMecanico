@@ -1,0 +1,275 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Detalle del Vehículo" subtitle="Información técnica e historial de trabajos">
+  <div id="loading-state" class="py-16 flex flex-col items-center justify-center space-y-3">
+    <div class="w-10 h-10 border-4 border-primary/20 border-t-secondary rounded-full animate-spin"></div>
+    <p class="text-sm font-medium text-gray-500">Cargando información del vehículo...</p>
+  </div>
+
+  <div id="error-state" class="hidden py-16 text-center">
+    <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-red-50 flex items-center justify-center text-red-500">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+    </div>
+    <h3 class="text-base font-bold text-gray-800">Error al cargar vehículo</h3>
+    <p id="error-message" class="text-xs text-gray-500 mt-1 max-w-sm mx-auto">El vehículo no existe o hubo un error.</p>
+    <a href="/admin/vehiculos" class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-gray-200 text-gray-800 hover:bg-gray-300 transition">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+      Volver a Vehículos
+    </a>
+  </div>
+
+  <div id="content-state" class="hidden space-y-6">
+    <!-- Vehicle Info Card -->
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative">
+      <div class="absolute top-6 right-6 flex gap-2">
+        <a id="btn-edit-vehicle" href="#" class="inline-flex items-center justify-center gap-2 px-3 h-10 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 transition font-medium text-sm" title="Editar Vehículo">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+          <span class="hidden sm:inline">Editar</span>
+        </a>
+        <a href="/admin/vehiculos" class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900 transition" title="Volver">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        </a>
+      </div>
+
+      <div class="flex items-start gap-4 mb-6 pr-40">
+        <div class="w-16 h-16 rounded-full bg-secondary/10 text-secondary flex items-center justify-center">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+        </div>
+        <div>
+          <h2 id="vehiculo-title" class="text-2xl font-bold text-gray-900">Marca Modelo (Año)</h2>
+          <div class="flex items-center gap-2 mt-1">
+            <span class="text-xs text-gray-500">Dueño:</span>
+            <a id="vehiculo-duenio" href="#" class="text-sm font-semibold text-primary hover:underline" title="Ver Cliente">Nombre del Cliente</a>
+            <a id="vehiculo-duenio-edit" href="#" class="text-gray-400 hover:text-blue-600 transition ml-1" title="Editar Cliente">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 pt-4 border-t border-gray-100">
+        <div>
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Marca</p>
+          <p id="vehiculo-marca" class="font-medium text-gray-900">-</p>
+        </div>
+        <div>
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Modelo</p>
+          <p id="vehiculo-modelo" class="font-medium text-gray-900">-</p>
+        </div>
+        <div>
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Año</p>
+          <p id="vehiculo-anio" class="font-medium text-gray-900">-</p>
+        </div>
+        <div>
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Kilometraje</p>
+          <p id="vehiculo-km" class="font-medium text-gray-900">-</p>
+        </div>
+        <div class="col-span-2 md:col-span-4">
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Número de Serie (VIN)</p>
+          <p id="vehiculo-vin" class="font-mono text-gray-900">-</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Historial de Trabajos Section -->
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+          <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+          Historial de Trabajos
+        </h3>
+        <a
+          href="/admin/trabajos"
+          class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-secondary hover:bg-secondary/90 text-white shadow-sm transition"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          Nuevo Trabajo
+        </a>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-gray-50 text-xs font-bold uppercase tracking-wider text-gray-500 border-b border-gray-100">
+            <tr>
+              <th class="py-3 px-4">Fecha</th>
+              <th class="py-3 px-4">Tipo</th>
+              <th class="py-3 px-4">Descripción</th>
+              <th class="py-3 px-4">KM Entrada</th>
+              <th class="py-3 px-4">Costo</th>
+              <th class="py-3 px-4 text-center">Estado</th>
+            </tr>
+          </thead>
+          <tbody id="trabajos-table-body" class="divide-y divide-gray-100">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+      
+      <div id="no-trabajos" class="hidden text-center py-8 bg-gray-50 rounded-xl border border-gray-100 border-dashed mt-4">
+        <p class="text-sm text-gray-500 mb-3">Este vehículo no tiene trabajos registrados en su historial.</p>
+      </div>
+    </div>
+  </div>
+</AdminLayout>
+
+<script>
+  import { createClient } from '@supabase/supabase-js';
+
+  const supabase = createClient(
+    'https://zsddtosxnfqmbyxptkfs.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzZGR0b3N4bmZxbWJ5eHB0a2ZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NTc5MjEsImV4cCI6MjEwNDIzMzkyMX0.x7Oysn4OW3p5_Lwaj87vjdKOWvRyfeXKuQhGsO7XjGw'
+  );
+
+  const vehiculoId = new URLSearchParams(window.location.search).get('id');
+
+  const ui = {
+    loading: document.getElementById('loading-state'),
+    error: document.getElementById('error-state'),
+    content: document.getElementById('content-state'),
+    errMsg: document.getElementById('error-message'),
+    
+    // Info
+    vTitle: document.getElementById('vehiculo-title'),
+    vDuenio: document.getElementById('vehiculo-duenio') as HTMLAnchorElement,
+    vMarca: document.getElementById('vehiculo-marca'),
+    vModelo: document.getElementById('vehiculo-modelo'),
+    vAnio: document.getElementById('vehiculo-anio'),
+    vKm: document.getElementById('vehiculo-km'),
+    vVin: document.getElementById('vehiculo-vin'),
+
+    // Trabajos
+    tBody: document.getElementById('trabajos-table-body'),
+    tNone: document.getElementById('no-trabajos'),
+  };
+
+  async function init() {
+    if (!vehiculoId) {
+      showError('ID de vehículo no proporcionado en la URL');
+      return;
+    }
+
+    try {
+      // 1. Load vehiculo with client
+      const { data: vehiculo, error: errV } = await supabase
+        .from('vehiculos')
+        .select('*, clientes(id_cliente, nombre, apellido, apellido_materno)')
+        .eq('id_vehiculo', vehiculoId)
+        .single();
+      
+      if (errV || !vehiculo) throw new Error('Vehículo no encontrado');
+
+      // Populate info
+      if (ui.vTitle) ui.vTitle.textContent = `${vehiculo.marca} ${vehiculo.modelo} (${vehiculo.anio})`;
+      if (ui.vMarca) ui.vMarca.textContent = vehiculo.marca;
+      if (ui.vModelo) ui.vModelo.textContent = vehiculo.modelo;
+      if (ui.vAnio) ui.vAnio.textContent = String(vehiculo.anio);
+      if (ui.vKm) ui.vKm.textContent = `${vehiculo.km ? vehiculo.km.toLocaleString('es-MX') : 0} km`;
+      if (ui.vVin) ui.vVin.textContent = vehiculo.numserie || 'No registrado';
+      
+      if (vehiculo.clientes && ui.vDuenio) {
+        const fullname = [vehiculo.clientes.nombre, vehiculo.clientes.apellido, vehiculo.clientes.apellido_materno].filter(Boolean).join(' ');
+        ui.vDuenio.textContent = fullname;
+        ui.vDuenio.href = `/admin/clientes/detalle?id=${vehiculo.clientes.id_cliente}`;
+        
+        const btnEditOwner = document.getElementById('vehiculo-duenio-edit');
+        if (btnEditOwner) {
+          btnEditOwner.href = `/admin/clientes?edit=${vehiculo.clientes.id_cliente}`;
+        }
+      }
+
+      const btnEditVehicle = document.getElementById('btn-edit-vehicle');
+      if (btnEditVehicle) {
+        btnEditVehicle.href = `/admin/vehiculos?edit=${vehiculoId}`;
+      }
+
+      await loadTrabajos();
+
+      // Show content
+      ui.loading?.classList.add('hidden');
+      ui.content?.classList.remove('hidden');
+      
+    } catch (err: any) {
+      showError(err.message || 'Error al cargar los datos');
+    }
+  }
+
+  async function loadTrabajos() {
+    if (!ui.tBody || !ui.tNone) return;
+
+    // Trying to select tipos_trabajo, if table exists, otherwise just get the data
+    const { data: trabajos, error } = await supabase
+      .from('trabajos')
+      // Note: Assuming tipos_trabajo exists per instructions, if it errors, we handle it
+      .select('*, tipos_trabajo(nombre)')
+      .eq('id_vehiculo', vehiculoId)
+      .order('fecha_ingreso', { ascending: false });
+
+    if (error) {
+      // If table doesn't exist yet, we just ignore for now or show empty state
+      console.warn("Could not load trabajos, maybe table doesn't exist yet:", error);
+      ui.tNone.classList.remove('hidden');
+      return;
+    }
+
+    ui.tBody.innerHTML = '';
+    
+    if (!trabajos || trabajos.length === 0) {
+      ui.tNone.classList.remove('hidden');
+      return;
+    }
+    
+    ui.tNone.classList.add('hidden');
+
+    trabajos.forEach(t => {
+      const tr = document.createElement('tr');
+      tr.className = 'hover:bg-gray-50/80 transition-colors';
+
+      const fecha = t.fecha_ingreso ? new Date(t.fecha_ingreso).toLocaleDateString('es-MX') : '—';
+      let tipo = t.tipos_trabajo?.nombre;
+      let desc = t.descripcion || 'Otro';
+      
+      if (!tipo || tipo === 'Otro') {
+        tipo = desc.length > 25 ? desc.substring(0, 25) + '...' : desc;
+      }
+
+      const km = t.km_entrada ? `${t.km_entrada.toLocaleString('es-MX')} km` : '—';
+      const costo = t.costo ? `$${t.costo.toLocaleString('es-MX', { minimumFractionDigits: 2 })}` : '—';
+      
+      const estadoReal = t.estado === 'Entregado' || t.fecha_entrega ? 'Entregado' : (t.estado || 'En proceso');
+      let estadoBadge = '';
+      switch(estadoReal) {
+        case 'Terminado':
+          estadoBadge = `<span class="px-2.5 py-1 bg-[#2D6A4F]/20 text-[#2D6A4F] rounded-lg text-xs font-bold">Terminado</span>`;
+          break;
+        case 'Entregado':
+          estadoBadge = `<span class="px-2.5 py-1 bg-blue-100 text-blue-700 rounded-lg text-xs font-bold">Entregado</span>`;
+          break;
+        default:
+          estadoBadge = `<span class="px-2.5 py-1 bg-yellow-100 text-yellow-800 rounded-lg text-xs font-bold">${estadoReal}</span>`;
+      }
+
+      tr.innerHTML = `
+        <td class="py-3 px-4 text-gray-700 whitespace-nowrap">${fecha}</td>
+        <td class="py-3 px-4 font-semibold text-primary whitespace-nowrap">${tipo}</td>
+        <td class="py-3 px-4 text-gray-600 truncate max-w-xs" title="${t.descripcion}">${desc}</td>
+        <td class="py-3 px-4 text-gray-600 whitespace-nowrap">${km}</td>
+        <td class="py-3 px-4 font-mono font-medium text-gray-900 whitespace-nowrap">${costo}</td>
+        <td class="py-3 px-4 text-center whitespace-nowrap">${estadoBadge}</td>
+      `;
+      tr.style.cursor = 'pointer';
+      tr.onclick = () => window.location.href = `/admin/trabajos?view=${t.id_trabajo}`;
+      ui.tBody.appendChild(tr);
+    });
+  }
+
+  function showError(msg: string) {
+    ui.loading?.classList.add('hidden');
+    ui.content?.classList.add('hidden');
+    ui.error?.classList.remove('hidden');
+    if (ui.errMsg) ui.errMsg.textContent = msg;
+  }
+
+  init();
+</script>

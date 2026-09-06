@@ -22,7 +22,9 @@ const { title, description = 'Taller mecánico profesional. Servicio automotriz 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>
-  <body class="min-h-full flex flex-col bg-background text-text font-sans antialiased">
+  <body class="min-h-full flex flex-col font-sans antialiased text-gray-100 relative bg-[#111] bg-fixed bg-cover bg-center" style="background-image: url('/fondoindex.jpg');">
+    <!-- Capa de oscurecimiento global (overlay) para asegurar lectura -->
+    <div class="fixed inset-0 bg-black/60 z-[-1]"></div>
     <Header />
     <main class="flex-grow">
       <slot />

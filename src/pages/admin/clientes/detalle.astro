@@ -1,0 +1,368 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Detalle del Cliente" subtitle="Información y vehículos asociados al cliente">
+  <div id="loading-state" class="py-16 flex flex-col items-center justify-center space-y-3">
+    <div class="w-10 h-10 border-4 border-primary/20 border-t-secondary rounded-full animate-spin"></div>
+    <p class="text-sm font-medium text-gray-500">Cargando información del cliente...</p>
+  </div>
+
+  <div id="error-state" class="hidden py-16 text-center">
+    <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-red-50 flex items-center justify-center text-red-500">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+    </div>
+    <h3 class="text-base font-bold text-gray-800">Error al cargar cliente</h3>
+    <p id="error-message" class="text-xs text-gray-500 mt-1 max-w-sm mx-auto">El cliente no existe o hubo un error.</p>
+    <a href="/admin/clientes" class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-gray-200 text-gray-800 hover:bg-gray-300 transition">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+      Volver a Clientes
+    </a>
+  </div>
+
+  <div id="content-state" class="hidden space-y-6">
+    <!-- Client Info Card -->
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative">
+      <div class="absolute top-6 right-6 flex gap-2">
+        <a id="btn-edit-client" href="#" class="inline-flex items-center justify-center gap-2 px-3 h-10 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 transition font-medium text-sm" title="Editar Cliente">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+          <span class="hidden sm:inline">Editar</span>
+        </a>
+        <a href="/admin/clientes" class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900 transition" title="Volver">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        </a>
+      </div>
+
+      <div class="flex items-start gap-4 mb-6 pr-24">
+        <div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center text-2xl font-bold">
+          <span id="client-initials">C</span>
+        </div>
+        <div>
+          <h2 id="client-name" class="text-2xl font-bold text-gray-900">Nombre del Cliente</h2>
+          <p id="client-registered" class="text-xs text-gray-500 mt-1">Registrado el --/--/----</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-100">
+        <div class="space-y-3">
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+            <span id="client-phone" class="text-sm text-gray-700">Sin teléfono</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            <span id="client-email" class="text-sm text-gray-700">Sin correo</span>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span id="client-address" class="text-sm text-gray-700">Sin domicilio</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
+            <span class="text-sm text-gray-700 font-mono">RFC: <span id="client-rfc">No registrado</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vehicles Section -->
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+          <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+          Vehículos de este cliente
+        </h3>
+        <button
+          type="button"
+          id="btn-add-vehicle"
+          class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-secondary hover:bg-secondary/90 text-white shadow-sm transition"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          Agregar Vehículo
+        </button>
+      </div>
+
+      <div id="vehicles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Vehicles populated dynamically -->
+      </div>
+      
+      <div id="no-vehicles" class="hidden text-center py-8 bg-gray-50 rounded-xl border border-gray-100 border-dashed">
+        <p class="text-sm text-gray-500 mb-3">Este cliente aún no tiene vehículos registrados.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Create Vehicle -->
+  <div
+    id="vehiculo-modal"
+    class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto"
+  >
+    <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-gray-100 overflow-hidden my-8">
+      <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+        <div>
+          <h3 class="text-lg font-bold text-primary">Nuevo Vehículo</h3>
+          <p class="text-xs text-gray-500">Agrega un vehículo a este cliente</p>
+        </div>
+        <button type="button" id="btn-close-modal" class="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <form id="vehiculo-form" class="p-6 space-y-4">
+        <input type="hidden" id="form-id-cliente" value="" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="form-marca" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+              Marca <span class="text-secondary">*</span>
+            </label>
+            <select id="form-marca" required class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition bg-white">
+              <option value="" disabled selected>Selecciona marca...</option>
+            </select>
+          </div>
+          <div>
+            <label for="form-modelo" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+              Modelo <span class="text-secondary">*</span>
+            </label>
+            <input type="text" id="form-modelo" required placeholder="Ej. Sentra" class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="form-anio" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+              Año <span class="text-secondary">*</span>
+            </label>
+            <input type="number" id="form-anio" required min="1950" max="2035" placeholder="2020" class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition" />
+          </div>
+          <div>
+            <label for="form-km" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+              Kilometraje <span class="text-secondary">*</span>
+            </label>
+            <input type="number" id="form-km" required min="0" placeholder="75000" class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition" />
+          </div>
+        </div>
+
+        <div>
+          <label for="form-numserie" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+            Número de Serie (VIN)
+          </label>
+          <input type="text" id="form-numserie" placeholder="Opcional" class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm uppercase focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition font-mono" />
+        </div>
+
+        <div class="pt-4 border-t border-gray-100 flex items-center justify-end gap-3">
+          <button type="button" id="btn-cancel-modal" class="px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition">Cancelar</button>
+          <button type="submit" id="btn-submit-form" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold bg-primary hover:bg-primary/90 text-white shadow-sm transition transform active:scale-95">
+            Guardar Vehículo
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</AdminLayout>
+
+<script>
+  import { createClient } from '@supabase/supabase-js';
+
+  const supabase = createClient(
+    'https://zsddtosxnfqmbyxptkfs.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzZGR0b3N4bmZxbWJ5eHB0a2ZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NTc5MjEsImV4cCI6MjEwNDIzMzkyMX0.x7Oysn4OW3p5_Lwaj87vjdKOWvRyfeXKuQhGsO7XjGw'
+  );
+
+  const clientId = new URLSearchParams(window.location.search).get('id');
+  
+  const ui = {
+    loading: document.getElementById('loading-state'),
+    error: document.getElementById('error-state'),
+    content: document.getElementById('content-state'),
+    errMsg: document.getElementById('error-message'),
+    
+    // Client Info
+    cInitials: document.getElementById('client-initials'),
+    cName: document.getElementById('client-name'),
+    cReg: document.getElementById('client-registered'),
+    cPhone: document.getElementById('client-phone'),
+    cEmail: document.getElementById('client-email'),
+    cAddress: document.getElementById('client-address'),
+    cRfc: document.getElementById('client-rfc'),
+
+    // Vehicles
+    vGrid: document.getElementById('vehicles-grid'),
+    vNone: document.getElementById('no-vehicles'),
+    vModal: document.getElementById('vehiculo-modal'),
+    vForm: document.getElementById('vehiculo-form') as HTMLFormElement,
+    
+    btnAddVehicle: document.getElementById('btn-add-vehicle'),
+    btnCloseModal: document.getElementById('btn-close-modal'),
+    btnCancelModal: document.getElementById('btn-cancel-modal'),
+    btnSubmitForm: document.getElementById('btn-submit-form') as HTMLButtonElement,
+    
+    // Form Inputs
+    fIdCliente: document.getElementById('form-id-cliente') as HTMLInputElement,
+    fMarca: document.getElementById('form-marca') as HTMLSelectElement,
+    fModelo: document.getElementById('form-modelo') as HTMLInputElement,
+    fAnio: document.getElementById('form-anio') as HTMLInputElement,
+    fKm: document.getElementById('form-km') as HTMLInputElement,
+    fNumserie: document.getElementById('form-numserie') as HTMLInputElement,
+  };
+
+  async function init() {
+    if (!clientId) {
+      showError('ID de cliente no proporcionado en la URL');
+      return;
+    }
+
+    try {
+      // 1. Load client
+      const { data: cliente, error: errC } = await supabase
+        .from('clientes')
+        .select('*')
+        .eq('id_cliente', clientId)
+        .single();
+      
+      if (errC || !cliente) throw new Error('Cliente no encontrado');
+
+      // Populate client info
+      const fullname = [cliente.nombre, cliente.apellido, cliente.apellido_materno].filter(Boolean).join(' ');
+      if (ui.cName) ui.cName.textContent = fullname;
+      if (ui.cInitials) ui.cInitials.textContent = cliente.nombre.charAt(0).toUpperCase();
+      if (ui.cPhone) ui.cPhone.textContent = cliente.telefono || 'Sin teléfono';
+      if (ui.cEmail) ui.cEmail.textContent = cliente.correo || 'Sin correo';
+      if (ui.cAddress) ui.cAddress.textContent = cliente.domicilio || 'Sin domicilio';
+      if (ui.cRfc) ui.cRfc.textContent = cliente.rfc || 'No registrado';
+      if (ui.cReg) ui.cReg.textContent = `Registrado el ${new Date(cliente.fecha_registro).toLocaleDateString('es-MX')}`;
+      if (ui.fIdCliente) ui.fIdCliente.value = clientId;
+
+      const btnEditClient = document.getElementById('btn-edit-client');
+      if (btnEditClient) {
+        btnEditClient.href = `/admin/clientes?edit=${clientId}`;
+      }
+
+      // 2. Load Marcas for modal
+      const { data: marcas } = await supabase
+        .from('marcas_vehiculo')
+        .select('nombre')
+        .eq('activo', true)
+        .order('nombre');
+      
+      if (marcas && ui.fMarca) {
+        marcas.forEach(m => {
+          const opt = document.createElement('option');
+          opt.value = m.nombre;
+          opt.textContent = m.nombre;
+          ui.fMarca.appendChild(opt);
+        });
+      }
+
+      await loadVehicles();
+
+      // Show content
+      ui.loading?.classList.add('hidden');
+      ui.content?.classList.remove('hidden');
+      
+    } catch (err: any) {
+      showError(err.message || 'Error al cargar los datos');
+    }
+  }
+
+  async function loadVehicles() {
+    if (!ui.vGrid || !ui.vNone) return;
+
+    const { data: vehiculos, error } = await supabase
+      .from('vehiculos')
+      .select('*')
+      .eq('id_cliente', clientId)
+      .order('fecha_registro', { ascending: false });
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    ui.vGrid.innerHTML = '';
+    
+    if (!vehiculos || vehiculos.length === 0) {
+      ui.vNone.classList.remove('hidden');
+      return;
+    }
+    
+    ui.vNone.classList.add('hidden');
+
+    vehiculos.forEach(v => {
+      const card = document.createElement('div');
+      card.className = 'border border-gray-100 rounded-xl p-4 hover:shadow-md transition bg-white flex flex-col justify-between cursor-pointer';
+      card.onclick = () => window.location.href = `/admin/vehiculos/detalle?id=${v.id_vehiculo}`;
+
+      card.innerHTML = `
+        <div>
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-bold text-lg text-primary">${v.marca} ${v.modelo}</h4>
+            <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs font-bold">${v.anio}</span>
+          </div>
+          <p class="text-sm text-gray-500 mb-1">KM: <span class="font-medium text-gray-800">${v.km ? v.km.toLocaleString('es-MX') : 0}</span></p>
+          <p class="text-xs text-gray-400 font-mono">VIN: ${v.numserie || 'N/A'}</p>
+        </div>
+      `;
+      ui.vGrid.appendChild(card);
+    });
+  }
+
+  function showError(msg: string) {
+    ui.loading?.classList.add('hidden');
+    ui.content?.classList.add('hidden');
+    ui.error?.classList.remove('hidden');
+    if (ui.errMsg) ui.errMsg.textContent = msg;
+  }
+
+  // Modal logic
+  function openModal() {
+    ui.vForm?.reset();
+    if (ui.fIdCliente) ui.fIdCliente.value = clientId || '';
+    ui.vModal?.classList.remove('hidden');
+  }
+
+  function closeModal() {
+    ui.vModal?.classList.add('hidden');
+  }
+
+  ui.btnAddVehicle?.addEventListener('click', openModal);
+  ui.btnCloseModal?.addEventListener('click', closeModal);
+  ui.btnCancelModal?.addEventListener('click', closeModal);
+  ui.vModal?.addEventListener('click', (e) => {
+    if (e.target === ui.vModal) closeModal();
+  });
+
+  ui.vForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!ui.btnSubmitForm) return;
+
+    ui.btnSubmitForm.disabled = true;
+    ui.btnSubmitForm.textContent = 'Guardando...';
+
+    const payload = {
+      id_cliente: parseInt(ui.fIdCliente.value, 10),
+      marca: ui.fMarca.value,
+      modelo: ui.fModelo.value.trim(),
+      anio: parseInt(ui.fAnio.value, 10),
+      km: parseInt(ui.fKm.value, 10) || 0,
+      numserie: ui.fNumserie.value.trim().toUpperCase() || null
+    };
+
+    try {
+      const { error } = await supabase.from('vehiculos').insert([payload]);
+      if (error) throw error;
+      
+      closeModal();
+      await loadVehicles();
+    } catch (err: any) {
+      alert('Error al guardar: ' + err.message);
+    } finally {
+      ui.btnSubmitForm.disabled = false;
+      ui.btnSubmitForm.textContent = 'Guardar Vehículo';
+    }
+  });
+
+  init();
+</script>
