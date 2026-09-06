@@ -1,0 +1,35 @@
+# ================================
+# Variables de entorno (NUNCA subir)
+# ================================
+.env
+.env.local
+.env.*.local
+.env.production
+
+# ================================
+# Astro
+# ================================
+dist/
+.astro/
+
+# ================================
+# Node.js
+# ================================
+node_modules/
+npm-debug.log*
+
+# ================================
+# Sistema operativo
+# ================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ================================
+# Editores
+# ================================
+.vscode/settings.json
+.idea/
+*.suo
+*.user
+
