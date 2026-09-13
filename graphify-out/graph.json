@@ -218,6 +218,72 @@
       "source_location": "L1"
     },
     {
+      "id": "package_dependencies",
+      "label": "dependencies",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "dependencies",
+      "source_file": "package.json",
+      "source_location": "L11"
+    },
+    {
+      "id": "package_dependencies_astro",
+      "label": "astro",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "astro",
+      "source_file": "package.json",
+      "source_location": "L15"
+    },
+    {
+      "id": "package_dependencies_lucide_astro",
+      "label": "@lucide/astro",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "@lucide/astro",
+      "source_file": "package.json",
+      "source_location": "L12"
+    },
+    {
+      "id": "package_dependencies_supabase_supabase_js",
+      "label": "@supabase/supabase-js",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "@supabase/supabase-js",
+      "source_file": "package.json",
+      "source_location": "L13"
+    },
+    {
+      "id": "package_dependencies_tailwindcss",
+      "label": "tailwindcss",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "tailwindcss",
+      "source_file": "package.json",
+      "source_location": "L16"
+    },
+    {
+      "id": "package_dependencies_tailwindcss_vite",
+      "label": "@tailwindcss/vite",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "@tailwindcss/vite",
+      "source_file": "package.json",
+      "source_location": "L14"
+    },
+    {
       "id": "package_name",
       "label": "name",
       "_origin": "ast",
@@ -227,61 +293,6 @@
       "norm_label": "name",
       "source_file": "package.json",
       "source_location": "L2"
-    },
-    {
-      "id": "package_scripts",
-      "label": "scripts",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "scripts",
-      "source_file": "package.json",
-      "source_location": "L5"
-    },
-    {
-      "id": "package_scripts_astro",
-      "label": "astro",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "astro",
-      "source_file": "package.json",
-      "source_location": "L9"
-    },
-    {
-      "id": "package_scripts_build",
-      "label": "build",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "build",
-      "source_file": "package.json",
-      "source_location": "L7"
-    },
-    {
-      "id": "package_scripts_dev",
-      "label": "dev",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "dev",
-      "source_file": "package.json",
-      "source_location": "L6"
-    },
-    {
-      "id": "package_scripts_preview",
-      "label": "preview",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "preview",
-      "source_file": "package.json",
-      "source_location": "L8"
     },
     {
       "id": "package_type",
@@ -681,6 +692,28 @@
       "source_location": "L9"
     },
     {
+      "id": "src_components_hero",
+      "label": "Hero.astro",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "Hero.astro",
+      "file_type": "code",
+      "norm_label": "hero.astro",
+      "source_file": "src/components/Hero.astro",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_pages_index",
+      "label": "pages/index.astro",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "pages/index.astro",
+      "file_type": "code",
+      "norm_label": "pages/index.astro",
+      "source_file": "src/pages/index.astro",
+      "source_location": "L1"
+    },
+    {
       "id": "src_components_footer",
       "label": "Footer.astro",
       "_origin": "ast",
@@ -758,17 +791,6 @@
       "source_location": "L102"
     },
     {
-      "id": "src_components_hero",
-      "label": "Hero.astro",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "Header.astro",
-      "file_type": "code",
-      "norm_label": "hero.astro",
-      "source_file": "src/components/Hero.astro",
-      "source_location": "L1"
-    },
-    {
       "id": "src_components_servicecard",
       "label": "ServiceCard.astro",
       "_origin": "ast",
@@ -799,17 +821,6 @@
       "file_type": "code",
       "norm_label": "contacto.astro",
       "source_file": "src/pages/contacto.astro",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_pages_index",
-      "label": "pages/index.astro",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "Header.astro",
-      "file_type": "code",
-      "norm_label": "pages/index.astro",
-      "source_file": "src/pages/index.astro",
       "source_location": "L1"
     },
     {
@@ -1214,70 +1225,59 @@
       "source_location": "L151"
     },
     {
-      "id": "package_dependencies",
-      "label": "dependencies",
+      "id": "package_scripts",
+      "label": "scripts",
       "_origin": "ast",
       "community": 5,
-      "community_name": "dependencies",
+      "community_name": "scripts",
       "file_type": "code",
-      "norm_label": "dependencies",
+      "norm_label": "scripts",
       "source_file": "package.json",
-      "source_location": "L11"
+      "source_location": "L5"
     },
     {
-      "id": "package_dependencies_astro",
+      "id": "package_scripts_astro",
       "label": "astro",
       "_origin": "ast",
       "community": 5,
-      "community_name": "dependencies",
+      "community_name": "scripts",
       "file_type": "code",
       "norm_label": "astro",
       "source_file": "package.json",
-      "source_location": "L15"
+      "source_location": "L9"
     },
     {
-      "id": "package_dependencies_lucide_astro",
-      "label": "@lucide/astro",
+      "id": "package_scripts_build",
+      "label": "build",
       "_origin": "ast",
       "community": 5,
-      "community_name": "dependencies",
+      "community_name": "scripts",
       "file_type": "code",
-      "norm_label": "@lucide/astro",
+      "norm_label": "build",
       "source_file": "package.json",
-      "source_location": "L12"
+      "source_location": "L7"
     },
     {
-      "id": "package_dependencies_supabase_supabase_js",
-      "label": "@supabase/supabase-js",
+      "id": "package_scripts_dev",
+      "label": "dev",
       "_origin": "ast",
       "community": 5,
-      "community_name": "dependencies",
+      "community_name": "scripts",
       "file_type": "code",
-      "norm_label": "@supabase/supabase-js",
+      "norm_label": "dev",
       "source_file": "package.json",
-      "source_location": "L13"
+      "source_location": "L6"
     },
     {
-      "id": "package_dependencies_tailwindcss",
-      "label": "tailwindcss",
+      "id": "package_scripts_preview",
+      "label": "preview",
       "_origin": "ast",
       "community": 5,
-      "community_name": "dependencies",
+      "community_name": "scripts",
       "file_type": "code",
-      "norm_label": "tailwindcss",
+      "norm_label": "preview",
       "source_file": "package.json",
-      "source_location": "L16"
-    },
-    {
-      "id": "package_dependencies_tailwindcss_vite",
-      "label": "@tailwindcss/vite",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "dependencies",
-      "file_type": "code",
-      "norm_label": "@tailwindcss/vite",
-      "source_file": "package.json",
-      "source_location": "L14"
+      "source_location": "L8"
     },
     {
       "id": "tsconfig",
@@ -1740,30 +1740,6 @@
       "context": "import",
       "source_file": "src/lib/supabase.ts",
       "source_location": "L1",
-      "weight": 1.0
-    },
-    {
-      "source": "src_pages_index",
-      "target": "src_components_hero",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "src/pages/index.astro",
-      "source_location": "L3",
-      "weight": 1.0
-    },
-    {
-      "source": "src_pages_index",
-      "target": "src_components_servicecard",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "src/pages/index.astro",
-      "source_location": "L4",
       "weight": 1.0
     },
     {
@@ -2911,15 +2887,6 @@
       "source_file": "src/pages/contacto.astro"
     },
     {
-      "source": "src_pages_index",
-      "target": "src_layouts_mainlayout",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/pages/index.astro"
-    },
-    {
       "source": "src_pages_nosotros",
       "target": "src_layouts_mainlayout",
       "relation": "imports_from",
@@ -3059,5 +3026,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "ac730a1a5b43d8758f93d86d2f80ec786c683e80"
+  "built_at_commit": "19f6d4c694ffa9c8199ab1b184fcb48d3a4b57a5"
 }

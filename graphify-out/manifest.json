@@ -6,44 +6,44 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1789320889.5699475,
-    "seen": 1789321470.5408757,
+    "mtime": 1789322432.9657116,
+    "seen": 1789328916.2886102,
     "ast_hash": "ac800c7e9dbf7b81da6d7c3a1c5a13b9",
     "semantic_hash": ""
   },
   "src/components/Footer.astro": {
-    "mtime": 1789320889.5759509,
-    "seen": 1789321470.540879,
+    "mtime": 1789322432.9746127,
+    "seen": 1789328916.2886155,
     "ast_hash": "357140587f77df88605bea971d059aac",
     "semantic_hash": ""
   },
   "src/components/Header.astro": {
-    "mtime": 1789320889.5759509,
-    "seen": 1789321470.5408814,
+    "mtime": 1789322432.9746127,
+    "seen": 1789328916.2886176,
     "ast_hash": "3b36207d56277d6b6a5a567819418366",
     "semantic_hash": ""
   },
   "src/components/Hero.astro": {
-    "mtime": 1789320889.5782075,
-    "seen": 1789321470.5408833,
+    "mtime": 1789322432.9746127,
+    "seen": 1789328916.2886202,
     "ast_hash": "790c7369a4a2c8a75b5afd55f57181d1",
     "semantic_hash": ""
   },
   "src/components/ServiceCard.astro": {
-    "mtime": 1789320889.5782075,
-    "seen": 1789321470.5408847,
+    "mtime": 1789322432.9746127,
+    "seen": 1789328916.2886226,
     "ast_hash": "d8a97786aa52725d2249cb257359da22",
     "semantic_hash": ""
   },
   "src/layouts/AdminLayout.astro": {
-    "mtime": 1789320889.581046,
-    "seen": 1789321470.5408866,
+    "mtime": 1789322432.9803014,
+    "seen": 1789328916.2886243,
     "ast_hash": "7026a4c7bc0e350c2356e1b2c11232f0",
     "semantic_hash": ""
   },
   "src/layouts/MainLayout.astro": {
-    "mtime": 1789320889.581046,
-    "seen": 1789321470.5408883,
+    "mtime": 1789322432.9820397,
+    "seen": 1789328916.2886262,
     "ast_hash": "a1103d9a33626f4a96ae0bee2fa10d01",
     "semantic_hash": ""
   },
@@ -54,32 +54,32 @@
     "semantic_hash": ""
   },
   "src/pages/admin/clientes/index.astro": {
-    "mtime": 1789320889.589048,
-    "seen": 1789321470.5408947,
+    "mtime": 1789322432.9865031,
+    "seen": 1789328916.2888985,
     "ast_hash": "9ced33264aa7c8ccf92df1e4ca87c9fb",
     "semantic_hash": ""
   },
   "src/pages/admin/index.astro": {
-    "mtime": 1789320889.5903163,
-    "seen": 1789321470.540896,
+    "mtime": 1789322432.9885123,
+    "seen": 1789328916.2889009,
     "ast_hash": "3e5c16ce324a19d35fd8671ac528903d",
     "semantic_hash": ""
   },
   "src/pages/admin/login.astro": {
-    "mtime": 1789320889.591606,
-    "seen": 1789321470.5408974,
+    "mtime": 1789322432.9885123,
+    "seen": 1789328916.2889023,
     "ast_hash": "126d1a87b7da5b12d29bcc680309641f",
     "semantic_hash": ""
   },
   "src/pages/admin/trabajos/index.astro": {
-    "mtime": 1789320889.593117,
-    "seen": 1789321470.5408988,
+    "mtime": 1789322432.9911063,
+    "seen": 1789328916.288904,
     "ast_hash": "46220f734165ffa6783c56bc46a7a20b",
     "semantic_hash": ""
   },
   "src/pages/admin/vehiculos/index.astro": {
-    "mtime": 1789320889.5961275,
-    "seen": 1789321470.5409021,
+    "mtime": 1789322432.9911063,
+    "seen": 1789328916.2889073,
     "ast_hash": "3e41d2d685b7638922c2af5494429f4b",
     "semantic_hash": ""
   },
@@ -90,9 +90,9 @@
     "semantic_hash": ""
   },
   "src/pages/index.astro": {
-    "mtime": 1789320889.5992463,
-    "seen": 1789321470.540905,
-    "ast_hash": "0c1d40055421d5443b3cf0ca60c9f23d",
+    "mtime": 1789328901.2448356,
+    "seen": 1789328916.2891467,
+    "ast_hash": "b65c197973dd55ea6ddf8efce4f024b7",
     "semantic_hash": ""
   },
   "src/pages/nosotros.astro": {
@@ -132,57 +132,57 @@
     "semantic_hash": ""
   },
   "src/pages/admin/clientes/detalle.astro": {
-    "mtime": 1789320889.586529,
-    "seen": 1789321470.540893,
+    "mtime": 1789322432.9844937,
+    "seen": 1789328916.288896,
     "ast_hash": "add32ec0b5e523aef26bf23ac9e00dae",
     "semantic_hash": ""
   },
   "src/pages/admin/vehiculos/detalle.astro": {
-    "mtime": 1789320889.5951297,
-    "seen": 1789321470.5409005,
+    "mtime": 1789322432.9911063,
+    "seen": 1789328916.2889056,
     "ast_hash": "f388cdb0ed2dcf2422ddf51abdca8c29",
     "semantic_hash": ""
   },
   "public/fondoindex.jpg": {
-    "mtime": 1789320889.5744145,
-    "seen": 1789321470.5409243,
+    "mtime": 1789322432.9737537,
+    "seen": 1789328916.2905533,
     "ast_hash": "ada68c44c279423078b3a383c8934910",
     "semantic_hash": ""
   },
   "src/pages/admin/catalogos/index.astro": {
-    "mtime": 1789320889.5849326,
-    "seen": 1789321470.5408916,
+    "mtime": 1789322432.9844937,
+    "seen": 1789328916.288893,
     "ast_hash": "51b154e14b500b195d2d7df566003d5c",
     "semantic_hash": ""
   },
   "docs/ARCHITECTURE.md": {
-    "mtime": 1789321431.891114,
-    "seen": 1789321470.5409148,
-    "ast_hash": "79cb3ebbca37d5a747efadcaec36fda2",
+    "mtime": 1789322432.851544,
+    "seen": 1789328916.2903025,
+    "ast_hash": "c19584f67b6d12ae9abe54eb6618ed30",
     "semantic_hash": ""
   },
   "docs/DATABASE_SCHEMA.md": {
-    "mtime": 1789321440.4904516,
-    "seen": 1789321470.5409164,
-    "ast_hash": "c95f4aa34dad2f7ef1fc9a14b02438ab",
+    "mtime": 1789322432.857234,
+    "seen": 1789328916.2903054,
+    "ast_hash": "4740966274c4f02f354314d4760d92d5",
     "semantic_hash": ""
   },
   "docs/PAGES_AND_FLOWS.md": {
-    "mtime": 1789321457.5161068,
-    "seen": 1789321470.540918,
-    "ast_hash": "95c8b44cdee969165254e02f5bd09515",
+    "mtime": 1789322432.8575494,
+    "seen": 1789328916.2903075,
+    "ast_hash": "c54e7d58996c9d9ad219fc05efafe104",
     "semantic_hash": ""
   },
   "docs/README.md": {
-    "mtime": 1789321424.8950088,
-    "seen": 1789321470.5409195,
-    "ast_hash": "0ecd85991a250225b41521ced2b42d5d",
+    "mtime": 1789322432.8599243,
+    "seen": 1789328916.2903094,
+    "ast_hash": "35721a92e56212c63c0eba3a3e07d5ea",
     "semantic_hash": ""
   },
   "docs/RULES_AND_STANDARDS.md": {
-    "mtime": 1789321448.008397,
-    "seen": 1789321470.5409207,
-    "ast_hash": "d81fc6988cdeb865b444da243eeb41df",
+    "mtime": 1789322432.8599243,
+    "seen": 1789328916.2903109,
+    "ast_hash": "62af328bbd205839478585637e2c8933",
     "semantic_hash": ""
   }
 }

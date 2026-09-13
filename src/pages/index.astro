@@ -1,96 +1,20 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
-import Hero from '../components/Hero.astro';
-import ServiceCard from '../components/ServiceCard.astro';
 ---
 
-<MainLayout title="Inicio | Servicio Mecánico">
-  <Hero />
-
-  <section class="py-16 sm:py-24 relative z-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">Nuestros Servicios</h2>
-        <p class="text-lg text-gray-300 max-w-2xl mx-auto">
-          Ofrecemos un catálogo completo de servicios para mantener tu vehículo en perfectas condiciones, con la mejor atención y garantía.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <ServiceCard
-          title="Mecánica General"
-          description="Reparación y mantenimiento de motor, transmisión, suspensión y más componentes esenciales."
-          icon="🔧"
-        />
-        <ServiceCard
-          title="Frenos"
-          description="Revisión, ajuste y cambio de sistema de frenos (balatas, discos, tambores, líquido)."
-          icon="🛞"
-        />
-        <ServiceCard
-          title="Sistema Eléctrico"
-          description="Diagnóstico y reparación del sistema eléctrico, alternador, batería y cableado."
-          icon="⚡"
-        />
-        <ServiceCard
-          title="Aire Acondicionado"
-          description="Carga de gas, reparación de fugas y mantenimiento completo del sistema de A/C."
-          icon="🌡️"
-        />
-        <ServiceCard
-          title="Cambio de Aceite"
-          description="Cambio de aceite sintético/mineral y filtros con productos de la más alta calidad."
-          icon="🛢️"
-        />
-        <ServiceCard
-          title="Diagnóstico Computarizado"
-          description="Escaneo con equipo de última generación y diagnóstico completo por computadora."
-          icon="🔍"
-        />
-      </div>
-    </div>
-  </section>
-
-  <section class="py-16 sm:py-24 bg-black/40 border-y border-white/10 backdrop-blur-md relative z-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-12">¿Por qué elegirnos?</h2>
-      
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-        <div class="bg-black/50 p-8 rounded-2xl border border-white/5 shadow-xl backdrop-blur-sm transition-transform hover:-translate-y-1">
-          <div class="w-16 h-16 mx-auto bg-primary/20 text-primary rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-inner border border-primary/30">
-            🥇
-          </div>
-          <h3 class="text-xl font-bold text-white mb-3">Experiencia</h3>
-          <p class="text-gray-300">Más de 10 años en el mercado automotriz respaldan nuestro trabajo y conocimiento en todas las marcas.</p>
-        </div>
-        
-        <div class="bg-black/50 p-8 rounded-2xl border border-white/5 shadow-xl backdrop-blur-sm transition-transform hover:-translate-y-1">
-          <div class="w-16 h-16 mx-auto bg-secondary/20 text-secondary rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-inner border border-secondary/30">
-            🤝
-          </div>
-          <h3 class="text-xl font-bold text-white mb-3">Transparencia</h3>
-          <p class="text-gray-300">Presupuestos claros y sin compromiso. Te explicamos exactamente qué necesita tu auto y por qué.</p>
-        </div>
-        
-        <div class="bg-black/50 p-8 rounded-2xl border border-white/5 shadow-xl backdrop-blur-sm transition-transform hover:-translate-y-1">
-          <div class="w-16 h-16 mx-auto bg-accent/20 text-accent rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-inner border border-accent/30">
-            🛡️
-          </div>
-          <h3 class="text-xl font-bold text-white mb-3">Garantía</h3>
-          <p class="text-gray-300">Garantía por escrito en todos nuestros trabajos y refacciones. Tu tranquilidad es nuestra prioridad.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-20 relative z-10 text-center">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-6">¿Necesitas ayuda con tu vehículo?</h2>
-      <p class="text-xl text-gray-300 mb-10">Agenda una cita hoy mismo o contáctanos para un presupuesto preliminar. Estamos para servirte.</p>
-      <a href="/contacto" class="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-secondary hover:bg-secondary/90 text-white font-bold text-lg shadow-lg hover:shadow-secondary/30 transition transform hover:-translate-y-0.5">
-        Contáctanos ahora
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-      </a>
-    </div>
-  </section>
-</MainLayout>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0;url=/admin/login">
+  <title>Cargando Servicio Mecánico...</title>
+  <script>
+    window.location.replace('/admin/login');
+  </script>
+</head>
+<body style="background: #1E3A5F; color: white; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; margin: 0;">
+  <div style="text-align: center;">
+    <h2 style="margin-bottom: 8px;">🔧 Servicio Mecánico</h2>
+    <p style="color: #cbd5e1; font-size: 14px;">Ingresando al sistema de gestión...</p>
+  </div>
+</body>
+</html>

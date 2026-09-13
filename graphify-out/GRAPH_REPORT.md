@@ -1,16 +1,16 @@
 # Graph Report - ServicioMecanico  (2026-09-13)
 
 ## Corpus Check
-- 31 files · ~29,117 words
+- 31 files · ~28,736 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 130 nodes · 141 edges · 13 communities (10 shown, 3 thin omitted)
+- 130 nodes · 138 edges · 15 communities (10 shown, 3 thin omitted)
 - Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `ac730a1a`
+- Built from commit: `19f6d4c6`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -20,7 +20,7 @@
 - Header.astro
 - AdminLayout.astro
 - 1. Tablas del Sistema
-- dependencies
+- scripts
 - tsconfig.json
 - rules/graphify.md
 - workflows/graphify.md
@@ -47,18 +47,18 @@
 ## Import Cycles
 - None detected.
 
-## Communities (13 total, 3 thin omitted)
+## Communities (15 total, 3 thin omitted)
 
 ### Community 0 - "package.json"
-Cohesion: 0.12
-Nodes (14): name, scripts, astro, build, dev, preview, type, version (+6 more)
+Cohesion: 0.11
+Nodes (15): dependencies, astro, @lucide/astro, @supabase/supabase-js, tailwindcss, @tailwindcss/vite, name, type (+7 more)
 
 ### Community 1 - "vehiculos/index.astro"
 Cohesion: 0.38
 Nodes (9): closeModal(), deleteVehiculo(), filterVehiculos(), handleFormSubmit(), loadVehiculos(), openCreateModal(), openEditModal(), populateMarcaDropdown() (+1 more)
 
 ### Community 2 - "Header.astro"
-Cohesion: 0.11
+Cohesion: 0.12
 Nodes (9): closeIcon, menuButton, mobileMenu, navLinks, openIcon, team, values, inclusions (+1 more)
 
 ### Community 3 - "AdminLayout.astro"
@@ -69,9 +69,9 @@ Nodes (5): navItems, overlay, sidebar, supabase, toggleBtn
 Cohesion: 0.12
 Nodes (15): 1.1 `clientes`, 1.2 `vehiculos`, 1.3 `trabajos`, 1.4 `marcas_vehiculo`, 1.5 `tipos_trabajo`, 1.6 `viscosidades`, 1. Tablas del Sistema, 2. Estructura de Campos Dinámicos (JSONB) (+7 more)
 
-### Community 5 - "dependencies"
-Cohesion: 0.33
-Nodes (6): dependencies, astro, @lucide/astro, @supabase/supabase-js, tailwindcss, @tailwindcss/vite
+### Community 5 - "scripts"
+Cohesion: 0.40
+Nodes (5): scripts, astro, build, dev, preview
 
 ### Community 9 - "1. Panel Administrativo (`/admin`)"
 Cohesion: 0.17
@@ -91,20 +91,20 @@ Nodes (4): 🚀 Comandos Rápidos, 📁 Estructura del Proyecto, Servicio Mecán
 
 ## Knowledge Gaps
 - **69 isolated node(s):** `name`, `type`, `version`, `dev`, `build` (+64 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 88 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 90 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `dependencies` connect `dependencies` to `package.json`?**
-  _High betweenness centrality (0.012) - this node is a cross-community bridge._
+- **Why does `scripts` connect `scripts` to `package.json`?**
+  _High betweenness centrality (0.009) - this node is a cross-community bridge._
 - **What connects `name`, `type`, `version` to the rest of the system?**
   _69 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.11764705882352941 - nodes in this community are weakly interconnected._
-- **Should `Header.astro` be split into smaller, more focused modules?**
   _Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected._
+- **Should `Header.astro` be split into smaller, more focused modules?**
+  _Cohesion score 0.11764705882352941 - nodes in this community are weakly interconnected._
 - **Should `AdminLayout.astro` be split into smaller, more focused modules?**
   _Cohesion score 0.13450292397660818 - nodes in this community are weakly interconnected._
 - **Should `1. Tablas del Sistema` be split into smaller, more focused modules?**
