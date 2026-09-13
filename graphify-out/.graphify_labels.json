@@ -1,12 +1,15 @@
 {
   "0": "package.json",
   "1": "vehiculos/index.astro",
-  "2": "MainLayout.astro",
+  "2": "Header.astro",
   "3": "AdminLayout.astro",
-  "4": "Header.astro",
+  "4": "1. Tablas del Sistema",
   "5": "dependencies",
   "6": "tsconfig.json",
   "7": "rules/graphify.md",
   "8": "workflows/graphify.md",
-  "9": "scripts"
+  "9": "1. Panel Administrativo (`/admin`)",
+  "10": "Arquitectura del Sistema",
+  "11": "Reglas de Desarrollo y Estándares Técnicos",
+  "12": "Servicio Mecánico — Documentación y Contexto del Proyecto"
 }

@@ -1,158 +1,188 @@
 {
   "astro.config.mjs": {
-    "mtime": 1788666785.5563698,
-    "seen": 1788668854.084835,
-    "ast_hash": "587a294a5ddda08529949ecb2763e9cd",
+    "mtime": 1789320889.4874482,
+    "seen": 1789321470.5408683,
+    "ast_hash": "ff10c33bc6069eb40720d51505f68406",
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1788728141.764858,
-    "seen": 1788736967.4753373,
-    "ast_hash": "90b5b625c0e9383684951a11e1ddace6",
+    "mtime": 1789320889.5699475,
+    "seen": 1789321470.5408757,
+    "ast_hash": "ac800c7e9dbf7b81da6d7c3a1c5a13b9",
     "semantic_hash": ""
   },
   "src/components/Footer.astro": {
-    "mtime": 1788733471.2292726,
-    "seen": 1788736967.4753416,
-    "ast_hash": "213082fc4a0a8e7b56a7838ebf851ac8",
+    "mtime": 1789320889.5759509,
+    "seen": 1789321470.540879,
+    "ast_hash": "357140587f77df88605bea971d059aac",
     "semantic_hash": ""
   },
   "src/components/Header.astro": {
-    "mtime": 1788733471.2302978,
-    "seen": 1788736967.4753435,
-    "ast_hash": "88c6f1c7862263ee32dea6c14709d04b",
+    "mtime": 1789320889.5759509,
+    "seen": 1789321470.5408814,
+    "ast_hash": "3b36207d56277d6b6a5a567819418366",
     "semantic_hash": ""
   },
   "src/components/Hero.astro": {
-    "mtime": 1788733471.2333717,
-    "seen": 1788736967.4753454,
-    "ast_hash": "b8aee52630c8e88b6d02e36dc95360df",
+    "mtime": 1789320889.5782075,
+    "seen": 1789321470.5408833,
+    "ast_hash": "790c7369a4a2c8a75b5afd55f57181d1",
     "semantic_hash": ""
   },
   "src/components/ServiceCard.astro": {
-    "mtime": 1788733471.2343974,
-    "seen": 1788736967.4753473,
-    "ast_hash": "bb670a55d0151f77af649daae4b8279f",
+    "mtime": 1789320889.5782075,
+    "seen": 1789321470.5408847,
+    "ast_hash": "d8a97786aa52725d2249cb257359da22",
     "semantic_hash": ""
   },
   "src/layouts/AdminLayout.astro": {
-    "mtime": 1789314519.397871,
-    "seen": 1789316626.287136,
-    "ast_hash": "4e33614babb555198ca5fd3096ae22fc",
+    "mtime": 1789320889.581046,
+    "seen": 1789321470.5408866,
+    "ast_hash": "7026a4c7bc0e350c2356e1b2c11232f0",
     "semantic_hash": ""
   },
   "src/layouts/MainLayout.astro": {
-    "mtime": 1788733471.2343974,
-    "seen": 1788736967.47535,
-    "ast_hash": "e3de1e785c96143e339275edba95625e",
+    "mtime": 1789320889.581046,
+    "seen": 1789321470.5408883,
+    "ast_hash": "a1103d9a33626f4a96ae0bee2fa10d01",
     "semantic_hash": ""
   },
   "src/lib/supabase.ts": {
-    "mtime": 1788668080.8728695,
-    "seen": 1788668854.0848637,
-    "ast_hash": "b1183f302793572a50d4e7acb4ed76e7",
+    "mtime": 1789320889.5837588,
+    "seen": 1789321470.5408897,
+    "ast_hash": "f63511ecca5c2b2f64256b55a6ddd2f7",
     "semantic_hash": ""
   },
   "src/pages/admin/clientes/index.astro": {
-    "mtime": 1789316082.0306685,
-    "seen": 1789316626.2881763,
-    "ast_hash": "e18395d1c9524d702e8dafa5469ae9b0",
+    "mtime": 1789320889.589048,
+    "seen": 1789321470.5408947,
+    "ast_hash": "9ced33264aa7c8ccf92df1e4ca87c9fb",
     "semantic_hash": ""
   },
   "src/pages/admin/index.astro": {
-    "mtime": 1789314672.6578093,
-    "seen": 1789316626.2881794,
-    "ast_hash": "4012ee7ab4f2442e0837ac6976458dc2",
+    "mtime": 1789320889.5903163,
+    "seen": 1789321470.540896,
+    "ast_hash": "3e5c16ce324a19d35fd8671ac528903d",
     "semantic_hash": ""
   },
   "src/pages/admin/login.astro": {
-    "mtime": 1789316551.440259,
-    "seen": 1789316626.2881815,
-    "ast_hash": "47e7dc738a55acb2074115e52a3aed6f",
+    "mtime": 1789320889.591606,
+    "seen": 1789321470.5408974,
+    "ast_hash": "126d1a87b7da5b12d29bcc680309641f",
     "semantic_hash": ""
   },
   "src/pages/admin/trabajos/index.astro": {
-    "mtime": 1789316082.0548308,
-    "seen": 1789316626.2881835,
-    "ast_hash": "dee694752a77bc01574c8b570d8b25bb",
+    "mtime": 1789320889.593117,
+    "seen": 1789321470.5408988,
+    "ast_hash": "46220f734165ffa6783c56bc46a7a20b",
     "semantic_hash": ""
   },
   "src/pages/admin/vehiculos/index.astro": {
-    "mtime": 1789316082.068416,
-    "seen": 1789316626.2884958,
-    "ast_hash": "14340f8fdabb59f91f05e459b8221c4a",
+    "mtime": 1789320889.5961275,
+    "seen": 1789321470.5409021,
+    "ast_hash": "3e41d2d685b7638922c2af5494429f4b",
     "semantic_hash": ""
   },
   "src/pages/contacto.astro": {
-    "mtime": 1788666980.634006,
-    "seen": 1788668854.0848744,
-    "ast_hash": "29bfa70c55ff29693c12d694c4dc530c",
+    "mtime": 1789320889.5974321,
+    "seen": 1789321470.5409036,
+    "ast_hash": "f3ad4275f57823520f7d3421db8b2cc3",
     "semantic_hash": ""
   },
   "src/pages/index.astro": {
-    "mtime": 1788733471.237733,
-    "seen": 1788736967.4760773,
-    "ast_hash": "36cea699c5a84bab2cc3807d90dbd106",
+    "mtime": 1789320889.5992463,
+    "seen": 1789321470.540905,
+    "ast_hash": "0c1d40055421d5443b3cf0ca60c9f23d",
     "semantic_hash": ""
   },
   "src/pages/nosotros.astro": {
-    "mtime": 1788666967.995373,
-    "seen": 1788668854.0848787,
-    "ast_hash": "e769901eea74d27e11991c05145a1114",
+    "mtime": 1789320889.6002915,
+    "seen": 1789321470.5409064,
+    "ast_hash": "ebeca75b6f75a18060920b0aa3daef6c",
     "semantic_hash": ""
   },
   "src/pages/servicios.astro": {
-    "mtime": 1788666958.6386347,
-    "seen": 1788668854.0848804,
-    "ast_hash": "d5bfa11e56418acb654034ec15aa3b1d",
+    "mtime": 1789320889.6015828,
+    "seen": 1789321470.5409079,
+    "ast_hash": "64b91b83598596fc679354c2a5b7551d",
     "semantic_hash": ""
   },
   "tsconfig.json": {
-    "mtime": 1788666390.9284537,
-    "seen": 1788668854.0848823,
-    "ast_hash": "cdb935a0df6cf1d722dbce04b1f73403",
+    "mtime": 1789320889.6071527,
+    "seen": 1789321470.5409088,
+    "ast_hash": "0d075133afa4d5680cdc8cf322e37972",
     "semantic_hash": ""
   },
   ".agents/rules/graphify.md": {
-    "mtime": 1788665745.6460783,
-    "seen": 1788668854.084884,
+    "mtime": 1789320889.4833977,
+    "seen": 1789321470.5409112,
     "ast_hash": "a0e4d192b9e2e17256124dbfc8e24e6a",
     "semantic_hash": ""
   },
   ".agents/workflows/graphify.md": {
-    "mtime": 1788665745.6500158,
-    "seen": 1788668854.0848856,
+    "mtime": 1789320889.4849863,
+    "seen": 1789321470.5409129,
     "ast_hash": "a831cf3669f1e6ab85d8a80ebe655f99",
     "semantic_hash": ""
   },
   "public/favicon.svg": {
-    "mtime": 1788666881.744213,
-    "seen": 1788668854.0848901,
-    "ast_hash": "9ce6180ef86c9797c91dd3d7bff2c0b1",
+    "mtime": 1789320889.5724986,
+    "seen": 1789321470.5409226,
+    "ast_hash": "2bcf90bbcc41df7b531db561db063978",
     "semantic_hash": ""
   },
   "src/pages/admin/clientes/detalle.astro": {
-    "mtime": 1788732827.7470431,
-    "seen": 1788736967.4755976,
-    "ast_hash": "87857ae67a33e9c1ec4d743fc8e10352",
+    "mtime": 1789320889.586529,
+    "seen": 1789321470.540893,
+    "ast_hash": "add32ec0b5e523aef26bf23ac9e00dae",
     "semantic_hash": ""
   },
   "src/pages/admin/vehiculos/detalle.astro": {
-    "mtime": 1788732827.7907164,
-    "seen": 1788736967.4758484,
-    "ast_hash": "77763f58bd03ee68f48c2bd4651f82ac",
+    "mtime": 1789320889.5951297,
+    "seen": 1789321470.5409005,
+    "ast_hash": "f388cdb0ed2dcf2422ddf51abdca8c29",
     "semantic_hash": ""
   },
   "public/fondoindex.jpg": {
-    "mtime": 1747355722.1076524,
-    "seen": 1788736967.4774828,
+    "mtime": 1789320889.5744145,
+    "seen": 1789321470.5409243,
     "ast_hash": "ada68c44c279423078b3a383c8934910",
     "semantic_hash": ""
   },
   "src/pages/admin/catalogos/index.astro": {
-    "mtime": 1789316082.0306685,
-    "seen": 1789316626.287844,
+    "mtime": 1789320889.5849326,
+    "seen": 1789321470.5408916,
     "ast_hash": "51b154e14b500b195d2d7df566003d5c",
+    "semantic_hash": ""
+  },
+  "docs/ARCHITECTURE.md": {
+    "mtime": 1789321431.891114,
+    "seen": 1789321470.5409148,
+    "ast_hash": "79cb3ebbca37d5a747efadcaec36fda2",
+    "semantic_hash": ""
+  },
+  "docs/DATABASE_SCHEMA.md": {
+    "mtime": 1789321440.4904516,
+    "seen": 1789321470.5409164,
+    "ast_hash": "c95f4aa34dad2f7ef1fc9a14b02438ab",
+    "semantic_hash": ""
+  },
+  "docs/PAGES_AND_FLOWS.md": {
+    "mtime": 1789321457.5161068,
+    "seen": 1789321470.540918,
+    "ast_hash": "95c8b44cdee969165254e02f5bd09515",
+    "semantic_hash": ""
+  },
+  "docs/README.md": {
+    "mtime": 1789321424.8950088,
+    "seen": 1789321470.5409195,
+    "ast_hash": "0ecd85991a250225b41521ced2b42d5d",
+    "semantic_hash": ""
+  },
+  "docs/RULES_AND_STANDARDS.md": {
+    "mtime": 1789321448.008397,
+    "seen": 1789321470.5409207,
+    "ast_hash": "d81fc6988cdeb865b444da243eeb41df",
     "semantic_hash": ""
   }
 }

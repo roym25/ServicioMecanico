@@ -7,5 +7,6 @@
   "5": "dependencies",
   "6": "tsconfig.json",
   "7": "rules/graphify.md",
-  "8": "workflows/graphify.md"
+  "8": "workflows/graphify.md",
+  "9": "scripts"
 }
