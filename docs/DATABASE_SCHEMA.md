@@ -155,3 +155,4 @@ const { data } = await supabase
   .select('*, clientes(nombre, apellido)')
   .order('fecha_registro', { ascending: false });
 ```
+

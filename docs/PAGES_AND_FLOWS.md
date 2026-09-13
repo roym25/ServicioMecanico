@@ -101,3 +101,4 @@ Todas las rutas dentro de `/admin` están protegidas por `AdminLayout.astro`. Si
 - `/servicios` (`src/pages/servicios.astro`): Listado público de servicios mecánicos para clientes.
 - `/nosotros` (`src/pages/nosotros.astro`): Valores y trayectoria del taller.
 - `/contacto` (`src/pages/contacto.astro`): Formulario de contacto, horarios de atención y ubicación.
+

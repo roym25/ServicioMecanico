@@ -79,3 +79,4 @@ El sistema soporta modo claro y modo oscuro con persistencia:
 - **Persistencia**: Almacenado en `localStorage.getItem('theme')` con valores `'dark'` o `'light'`.
 - **Prevención de Parpadeo (FOUC)**: En el `<head>` de `AdminLayout.astro`, un script inline síncrono evalúa `localStorage` antes de renderizar la página.
 - **Paleta de Color Oscuro**: Se utilizan tonos **carbón neutro / zinc** (`#18181b`, `#202022`, `#27272a`). **Nunca usar tonos azulados (slate)** para el modo oscuro en este proyecto.
+

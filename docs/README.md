@@ -55,3 +55,4 @@ ServicioMecanico/
 ├── astro.config.mjs          # Configuración de Astro y Tailwind Vite plugin
 └── package.json              # Dependencias del proyecto
 ```
+
