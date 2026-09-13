@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "src/layouts/AdminLayout.astro": {
-    "mtime": 1789314519.397871,
-    "seen": 1789316626.287136,
-    "ast_hash": "4e33614babb555198ca5fd3096ae22fc",
+    "mtime": 1788736523.2251227,
+    "seen": 1788736967.4753485,
+    "ast_hash": "04d0524338a8cc8aec60b1bb79b18185",
     "semantic_hash": ""
   },
   "src/layouts/MainLayout.astro": {
@@ -54,33 +54,33 @@
     "semantic_hash": ""
   },
   "src/pages/admin/clientes/index.astro": {
-    "mtime": 1789316082.0306685,
-    "seen": 1789316626.2881763,
-    "ast_hash": "e18395d1c9524d702e8dafa5469ae9b0",
+    "mtime": 1788732827.7882533,
+    "seen": 1788736967.475601,
+    "ast_hash": "1214d040aae2609ab4fad8e636bb9431",
     "semantic_hash": ""
   },
   "src/pages/admin/index.astro": {
-    "mtime": 1789314672.6578093,
-    "seen": 1789316626.2881794,
-    "ast_hash": "4012ee7ab4f2442e0837ac6976458dc2",
+    "mtime": 1788736055.2935097,
+    "seen": 1788736967.4756055,
+    "ast_hash": "e6638d2c57f0aea52a73679b54d50802",
     "semantic_hash": ""
   },
   "src/pages/admin/login.astro": {
-    "mtime": 1789316551.440259,
-    "seen": 1789316626.2881815,
-    "ast_hash": "47e7dc738a55acb2074115e52a3aed6f",
+    "mtime": 1788668356.9789202,
+    "seen": 1788668854.0848694,
+    "ast_hash": "2659381e29ed050667e9adc700614b0b",
     "semantic_hash": ""
   },
   "src/pages/admin/trabajos/index.astro": {
-    "mtime": 1789316082.0548308,
-    "seen": 1789316626.2881835,
-    "ast_hash": "dee694752a77bc01574c8b570d8b25bb",
+    "mtime": 1788732827.7545185,
+    "seen": 1788736967.4758463,
+    "ast_hash": "3edfaa4ed1b85c05c879960a21033614",
     "semantic_hash": ""
   },
   "src/pages/admin/vehiculos/index.astro": {
-    "mtime": 1789316082.068416,
-    "seen": 1789316626.2884958,
-    "ast_hash": "14340f8fdabb59f91f05e459b8221c4a",
+    "mtime": 1788732827.7907164,
+    "seen": 1788736967.4758506,
+    "ast_hash": "473ea7c825661110c1c2cfcc3c9aa88d",
     "semantic_hash": ""
   },
   "src/pages/contacto.astro": {
@@ -137,6 +137,12 @@
     "ast_hash": "87857ae67a33e9c1ec4d743fc8e10352",
     "semantic_hash": ""
   },
+  "src/pages/admin/configuracion/index.astro": {
+    "mtime": 1788731090.0959322,
+    "seen": 1788736967.475603,
+    "ast_hash": "8955c42a70f1ba05215cf30f0b6f143a",
+    "semantic_hash": ""
+  },
   "src/pages/admin/vehiculos/detalle.astro": {
     "mtime": 1788732827.7907164,
     "seen": 1788736967.4758484,
@@ -147,12 +153,6 @@
     "mtime": 1747355722.1076524,
     "seen": 1788736967.4774828,
     "ast_hash": "ada68c44c279423078b3a383c8934910",
-    "semantic_hash": ""
-  },
-  "src/pages/admin/catalogos/index.astro": {
-    "mtime": 1789316082.0306685,
-    "seen": 1789316626.287844,
-    "ast_hash": "51b154e14b500b195d2d7df566003d5c",
     "semantic_hash": ""
   }
 }

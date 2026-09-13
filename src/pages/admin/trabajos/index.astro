@@ -90,9 +90,18 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="col-span-1 md:col-span-2">
               <label for="id_vehiculo" class="block text-sm font-medium text-gray-700 mb-1">Vehículo <span class="text-[#E63946]">*</span></label>
-              <select id="id_vehiculo" name="id_vehiculo" required class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]">
-                <option value="">Seleccione un vehículo</option>
-              </select>
+              <div class="flex items-center gap-2">
+                <select id="id_vehiculo" name="id_vehiculo" required class="block flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]">
+                  <option value="">Seleccione un vehículo</option>
+                </select>
+                <button type="button" onclick="loadVehiculos()" title="Actualizar lista de vehículos" class="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md text-xs font-bold flex items-center justify-center shrink-0 transition">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                </button>
+                <button type="button" id="btnOpenQuickVehiculo" title="Registrar nuevo vehículo" class="px-3 py-2 bg-[#E63946] hover:bg-[#d63340] text-white rounded-md text-xs font-bold flex items-center justify-center shrink-0 transition">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                </button>
+              </div>
+              <p class="text-[11px] text-gray-500 mt-1">Si el vehículo o cliente no existe, usa los botones (+) para registrarlos rápidamente sin salir de esta pantalla.</p>
             </div>
 
             <div>
@@ -107,6 +116,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <div class="col-span-1 md:col-span-2">
               <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción <span class="text-[#E63946]">*</span></label>
               <textarea id="descripcion" name="descripcion" rows="2" required class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]"></textarea>
+              <textarea id="descripcion" name="descripcion" rows="2" required maxlength="500" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]"></textarea>
             </div>
 
             <!-- Dynamic Fields Container -->
@@ -118,11 +128,13 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <div>
               <label for="km_entrada" class="block text-sm font-medium text-gray-700 mb-1">Kilometraje de Entrada <span class="text-[#E63946]">*</span></label>
               <input type="number" id="km_entrada" name="km_entrada" required class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]">
+              <input type="number" id="km_entrada" name="km_entrada" required min="0" max="999999" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]">
             </div>
 
             <div>
               <label for="costo" class="block text-sm font-medium text-gray-700 mb-1">Costo (MXN)</label>
               <input type="number" id="costo" name="costo" step="0.01" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]">
+              <input type="number" id="costo" name="costo" step="0.01" min="0" max="9999999" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]">
             </div>
 
             <div>
@@ -138,6 +150,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <div class="col-span-1 md:col-span-2">
               <label for="notas" class="block text-sm font-medium text-gray-700 mb-1">Notas</label>
               <textarea id="notas" name="notas" rows="2" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]"></textarea>
+              <textarea id="notas" name="notas" rows="2" maxlength="1000" class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]"></textarea>
             </div>
           </div>
         </form>
@@ -206,6 +219,111 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             Sí, eliminar
           </button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Vehiculo Modal -->
+  <div id="quickVehiculoModal" class="fixed inset-0 bg-black/60 z-[60] flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-md flex flex-col">
+      <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-[#F8F9FA] rounded-t-lg">
+        <h2 class="text-lg font-bold text-[#1E3A5F]">Registro Rápido de Vehículo</h2>
+        <h2 class="text-lg font-bold text-[#1E3A5F]">Nuevo Vehículo</h2>
+        <button type="button" class="close-qv-modal text-gray-400 hover:text-gray-600 transition-colors">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+      <div class="p-6 overflow-y-auto">
+        <form id="qvForm" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Cliente <span class="text-red-500">*</span></label>
+            <div class="flex gap-2">
+              <select id="qv_id_cliente" required class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+                <option value="">Selecciona un cliente...</option>
+              </select>
+              <button type="button" id="btnOpenQuickCliente" class="px-3 py-2 bg-secondary text-white rounded-xl text-xs font-bold flex items-center justify-center shrink-0 hover:bg-secondary/90 transition" title="Nuevo Cliente">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Marca <span class="text-red-500">*</span></label>
+              <select id="qv_marca" required class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+                <option value="">Selecciona marca...</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Modelo <span class="text-red-500">*</span></label>
+              <input type="text" id="qv_modelo" required placeholder="Ej. Sentra" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+              <input type="text" id="qv_modelo" required maxlength="50" placeholder="Ej. Sentra" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Año <span class="text-red-500">*</span></label>
+              <input type="number" id="qv_anio" required placeholder="Ej. 2020" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+              <input type="number" id="qv_anio" required min="1950" max="2027" placeholder="Ej. 2020" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Km Actual <span class="text-red-500">*</span></label>
+              <input type="number" id="qv_km" required placeholder="Ej. 75000" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+              <input type="number" id="qv_km" required min="0" max="999999" placeholder="Ej. 75000" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+            </div>
+            <div class="col-span-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Número de Serie (VIN)</label>
+              <input type="text" id="qv_numserie" placeholder="Opcional" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm uppercase font-mono focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+              <input type="text" id="qv_numserie" placeholder="Opcional" minlength="17" maxlength="17" pattern="^[A-HJ-NPR-Za-hj-npr-z0-9]{17}$" title="Debe tener exactamente 17 caracteres válidos (sin I, O, Q)." class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm uppercase font-mono focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+            </div>
+          </div>
+          <p class="text-[11px] text-gray-500 mt-4 text-center">* Si requieres ver o editar todos los detalles, ve a la sección de Vehículos.</p>
+        </form>
+      </div>
+      <div class="px-6 py-4 border-t border-gray-100 bg-gray-50 flex justify-end gap-3 rounded-b-lg">
+        <button type="button" class="close-qv-modal px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded hover:bg-gray-50 transition-colors">Cancelar</button>
+        <button type="submit" form="qvForm" class="px-4 py-2 bg-[#1E3A5F] text-white rounded hover:bg-[#1E3A5F]/90 transition-colors flex items-center">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Cliente Modal -->
+  <div id="quickClienteModal" class="fixed inset-0 bg-black/70 z-[70] flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-md flex flex-col">
+      <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-[#F8F9FA] rounded-t-lg">
+        <h2 class="text-lg font-bold text-[#1E3A5F]">Registro Rápido de Cliente</h2>
+        <h2 class="text-lg font-bold text-[#1E3A5F]">Nuevo Cliente</h2>
+        <button type="button" class="close-qc-modal text-gray-400 hover:text-gray-600 transition-colors">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+      <div class="p-6 overflow-y-auto">
+        <form id="qcForm" class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Nombre <span class="text-red-500">*</span></label>
+              <input type="text" id="qc_nombre" required class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+              <input type="text" id="qc_nombre" required minlength="2" maxlength="50" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Apellido <span class="text-red-500">*</span></label>
+              <input type="text" id="qc_apellido" required class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+              <input type="text" id="qc_apellido" required minlength="2" maxlength="50" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+            </div>
+            <div class="col-span-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Teléfono <span class="text-red-500">*</span></label>
+              <input type="text" id="qc_telefono" required class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+              <input type="text" id="qc_telefono" required minlength="10" maxlength="20" pattern="^\+?[0-9\s\-]+$" title="Debe contener entre 10 y 20 números, espacios o guiones." class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+            </div>
+            <div class="col-span-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Correo Electrónico</label>
+              <input type="email" id="qc_email" placeholder="Opcional" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+              <input type="email" id="qc_email" placeholder="Opcional" maxlength="100" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]">
+            </div>
+          </div>
+          <p class="text-[11px] text-gray-500 mt-4 text-center">* Si requieres ver o editar todos los detalles, ve a la sección de Clientes.</p>
+        </form>
+      </div>
+      <div class="px-6 py-4 border-t border-gray-100 bg-gray-50 flex justify-end gap-3 rounded-b-lg">
+        <button type="button" class="close-qc-modal px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded hover:bg-gray-50 transition-colors">Cancelar</button>
+        <button type="submit" form="qcForm" class="px-4 py-2 bg-[#1E3A5F] text-white rounded hover:bg-[#1E3A5F]/90 transition-colors flex items-center">Guardar</button>
       </div>
     </div>
   </div>
@@ -342,7 +460,10 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     }
   }
 
-  async function loadVehiculos() {
+  window.loadVehiculos = async function loadVehiculos() {
+    const btnRefresh = document.querySelector('[title="Actualizar lista de vehículos"] svg');
+    if (btnRefresh) btnRefresh.classList.add('animate-spin');
+    
     const { data, error } = await supabase
       .from('vehiculos')
       .select('*, clientes(nombre, apellido)')
@@ -351,20 +472,33 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     if (!error && data) {
       vehiculos = data;
       const select = document.getElementById('id_vehiculo');
+      const currentVal = select.value; // preserve selection
+      
       select.innerHTML = '<option value="">Seleccione un vehículo</option>';
       data.forEach(v => {
         const option = document.createElement('option');
         option.value = v.id_vehiculo;
-        option.textContent = `${v.marca} ${v.modelo} - Dueño: ${v.clientes?.nombre} ${v.clientes?.apellido}`;
+        option.textContent = `${v.marca} ${v.modelo} - Dueño: ${v.clientes?.nombre || ''} ${v.clientes?.apellido || ''}`;
         select.appendChild(option);
       });
+      
+      if (currentVal) select.value = currentVal;
     }
+    
+    if (btnRefresh) setTimeout(() => btnRefresh.classList.remove('animate-spin'), 500);
   }
 
   // Event Listeners
   function setupEventListeners() {
     searchInput.addEventListener('input', renderTable);
     statusFilter.addEventListener('change', renderTable);
+    
+    // Auto refresh vehicles when coming back to the tab
+    window.addEventListener('focus', () => {
+      if (!formModal.classList.contains('hidden')) {
+        window.loadVehiculos();
+      }
+    });
     
     btnNuevoTrabajo.addEventListener('click', () => openFormModal());
     
@@ -409,15 +543,19 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           for (const campo of campos) {
             const div = document.createElement('div');
             
+            const fieldId = `dyn_${campo.nombre}`;
+            
             const label = document.createElement('label');
             label.className = 'block text-sm font-medium text-gray-700 mb-1';
             label.textContent = campo.etiqueta;
+            label.htmlFor = fieldId;
             div.appendChild(label);
             
             if (campo.tipo === 'text') {
               const input = document.createElement('input');
               input.type = 'text';
-              input.name = `dyn_${campo.nombre}`;
+              input.id = fieldId;
+              input.name = fieldId;
               input.className = 'block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]';
               if (prefillDetalles && prefillDetalles[campo.nombre]) {
                 input.value = prefillDetalles[campo.nombre];
@@ -426,7 +564,8 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             } 
             else if (campo.tipo === 'select') {
               const select = document.createElement('select');
-              select.name = `dyn_${campo.nombre}`;
+              select.id = fieldId;
+              select.name = fieldId;
               select.className = 'block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#1E3A5F] focus:border-[#1E3A5F]';
               
               const defaultOpt = document.createElement('option');
@@ -464,7 +603,8 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
               wrapper.className = 'flex items-center mt-2';
               const input = document.createElement('input');
               input.type = 'checkbox';
-              input.name = `dyn_${campo.nombre}`;
+              input.id = fieldId;
+              input.name = fieldId;
               input.className = 'h-4 w-4 text-[#1E3A5F] focus:ring-[#1E3A5F] border-gray-300 rounded';
               if (prefillDetalles && prefillDetalles[campo.nombre]) {
                 input.checked = prefillDetalles[campo.nombre] === true;
@@ -473,6 +613,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
               const label2 = document.createElement('label');
               label2.className = 'ml-2 block text-sm text-gray-900';
               label2.textContent = "Sí / Activo";
+              label2.htmlFor = fieldId;
               
               wrapper.appendChild(input);
               wrapper.appendChild(label2);
@@ -499,11 +640,15 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     const status = statusFilter.value;
     
     const filtered = trabajos.filter(t => {
+      const formattedDate = formatDate(t.fecha_ingreso).toLowerCase();
       const matchSearch = 
         (t.vehiculos?.marca || '').toLowerCase().includes(term) ||
         (t.vehiculos?.modelo || '').toLowerCase().includes(term) ||
         (t.vehiculos?.clientes?.nombre || '').toLowerCase().includes(term) ||
-        (t.descripcion || '').toLowerCase().includes(term);
+        (t.vehiculos?.clientes?.apellido || '').toLowerCase().includes(term) ||
+        (t.descripcion || '').toLowerCase().includes(term) ||
+        formattedDate.includes(term) ||
+        (t.fecha_ingreso || '').toLowerCase().includes(term);
         
       let matchStatus = true;
       const estadoActual = t.estado || 'En proceso';
@@ -735,7 +880,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       notas: formData.get('notas') || null,
     };
     
-    data.estado = data.fecha_entrega ? 'Entregado' : 'En proceso';
+    const id = formData.get('id_trabajo');
     
     // Extract dynamic fields
     const detalles = {};
@@ -750,8 +895,6 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     });
     
     data.detalles = detalles;
-    
-    const id = formData.get('id_trabajo');
     
     try {
       if (id) {
@@ -817,6 +960,109 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       toast.classList.add('translate-y-full', 'opacity-0');
     }, 3000);
   }
+
+  // Quick Create Logic
+  const quickVehiculoModal = document.getElementById('quickVehiculoModal');
+  const quickClienteModal = document.getElementById('quickClienteModal');
+  const qvForm = document.getElementById('qvForm');
+  const qcForm = document.getElementById('qcForm');
+  
+  document.getElementById('btnOpenQuickVehiculo').addEventListener('click', async () => {
+    qvForm.reset();
+    await loadQVCatalogos();
+    quickVehiculoModal.classList.remove('hidden');
+  });
+
+  document.getElementById('btnOpenQuickCliente').addEventListener('click', () => {
+    qcForm.reset();
+    quickClienteModal.classList.remove('hidden');
+  });
+
+  document.querySelectorAll('.close-qv-modal').forEach(btn => btn.addEventListener('click', () => quickVehiculoModal.classList.add('hidden')));
+  document.querySelectorAll('.close-qc-modal').forEach(btn => btn.addEventListener('click', () => quickClienteModal.classList.add('hidden')));
+
+  async function loadQVCatalogos() {
+    // Clientes
+    const { data: clientes } = await supabase.from('clientes').select('id_cliente, nombre, apellido').order('nombre');
+    const selectCl = document.getElementById('qv_id_cliente');
+    const currCl = selectCl.value;
+    selectCl.innerHTML = '<option value="">Selecciona un cliente...</option>';
+    (clientes || []).forEach(c => {
+      const o = document.createElement('option');
+      o.value = c.id_cliente;
+      o.textContent = `${c.nombre} ${c.apellido}`;
+      selectCl.appendChild(o);
+    });
+    if(currCl) selectCl.value = currCl;
+
+    // Marcas
+    const { data: marcas } = await supabase.from('marcas_vehiculo').select('nombre').eq('activo', true).order('nombre');
+    const selectMa = document.getElementById('qv_marca');
+    const currMa = selectMa.value;
+    selectMa.innerHTML = '<option value="">Selecciona marca...</option>';
+    (marcas || []).forEach(m => {
+      const o = document.createElement('option');
+      o.value = m.nombre;
+      o.textContent = m.nombre;
+      selectMa.appendChild(o);
+    });
+    if(currMa) selectMa.value = currMa;
+  }
+
+  qcForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const payload = {
+      nombre: document.getElementById('qc_nombre').value.trim(),
+      apellido: document.getElementById('qc_apellido').value.trim(),
+      telefono: document.getElementById('qc_telefono').value.trim(),
+      email: document.getElementById('qc_email').value.trim() || null
+    };
+    try {
+      const { data, error } = await supabase.from('clientes').insert([payload]).select().single();
+      if (error) throw error;
+      showToast('Éxito', 'Cliente registrado', 'success');
+      quickClienteModal.classList.add('hidden');
+      await loadQVCatalogos();
+      document.getElementById('qv_id_cliente').value = data.id_cliente;
+    } catch (err) {
+      showToast('Error', 'No se pudo guardar el cliente', 'error');
+    }
+  });
+
+  qvForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    let numserieValue = document.getElementById('qv_numserie').value.trim().toUpperCase() || null;
+    if (numserieValue) {
+      if (numserieValue.length !== 17) {
+        showToast('Error', 'El Número de Serie (VIN) debe tener exactamente 17 caracteres', 'error');
+        return;
+      }
+      if (!/^[A-HJ-NPR-Z0-9]{17}$/.test(numserieValue)) {
+        showToast('Error', 'El VIN contiene caracteres inválidos (No puede contener I, O, Q)', 'error');
+        return;
+      }
+    }
+
+    const payload = {
+      id_cliente: parseInt(document.getElementById('qv_id_cliente').value),
+      marca: document.getElementById('qv_marca').value,
+      modelo: document.getElementById('qv_modelo').value.trim(),
+      anio: parseInt(document.getElementById('qv_anio').value),
+      km: parseInt(document.getElementById('qv_km').value),
+      numserie: numserieValue
+    };
+    try {
+      const { data, error } = await supabase.from('vehiculos').insert([payload]).select().single();
+      if (error) throw error;
+      showToast('Éxito', 'Vehículo registrado rápidamente', 'success');
+      quickVehiculoModal.classList.add('hidden');
+      await window.loadVehiculos();
+      document.getElementById('id_vehiculo').value = data.id_vehiculo;
+    } catch (err) {
+      showToast('Error', 'No se pudo guardar el vehículo', 'error');
+    }
+  });
 
   // Run init directly
   init();

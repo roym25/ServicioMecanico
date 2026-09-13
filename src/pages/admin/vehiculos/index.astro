@@ -144,13 +144,20 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <select
               id="form-id-cliente"
               required
-              class="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition bg-white"
+              class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition bg-white"
             >
-              <option value="" disabled selected>Selecciona un cliente...</option>
               <!-- Options populated dynamically -->
             </select>
+            <button
+              type="button"
+              onclick="loadClientesForSelect()"
+              title="Actualizar lista de clientes"
+              class="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold flex items-center justify-center shrink-0 transition"
+            >
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+            </button>
             <a
-              href="/admin/clientes"
+              href="/admin/clientes?new=true"
               target="_blank"
               class="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold flex items-center justify-center shrink-0 transition"
               title="Ir a registrar cliente nuevo"
@@ -158,6 +165,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
             </a>
           </div>
+          <p class="text-[11px] text-gray-500 mt-1">Si el cliente no existe, ábrelo con el botón (+), guárdalo y luego haz clic en (↻) para actualizar la lista.</p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -185,6 +193,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
               type="text"
               id="form-modelo"
               required
+              maxlength="50"
               placeholder="Ej. Sentra, Corolla, Ranger"
               class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
             />
@@ -203,6 +212,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
               required
               min="1950"
               max="2035"
+              max="2027"
               placeholder="Ej. 2020"
               class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
             />
@@ -218,6 +228,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
               id="form-km"
               required
               min="0"
+              max="999999"
               placeholder="Ej. 75000"
               class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
             />
@@ -232,6 +243,10 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <input
             type="text"
             id="form-numserie"
+            minlength="17"
+            maxlength="17"
+            pattern="^[A-HJ-NPR-Za-hj-npr-z0-9]{17}$"
+            title="Debe tener exactamente 17 caracteres válidos (sin I, O, Q)."
             placeholder="Opcional"
             class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm uppercase focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition font-mono"
           />
@@ -362,7 +377,9 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     return `${n.toLocaleString('es-MX')} km`;
   }
 
-  async function loadClientesForSelect() {
+  window.loadClientesForSelect = async function loadClientesForSelect() {
+    const btnRefresh = document.querySelector('[title="Actualizar lista de clientes"] svg');
+    if (btnRefresh) btnRefresh.classList.add('animate-spin');
     try {
       const { data, error } = await supabase
         .from('clientes')
@@ -371,11 +388,20 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 
       if (error) throw error;
       clientesOptions = data || [];
-      populateClienteDropdown();
+      const currentVal = formIdCliente?.value ? parseInt(formIdCliente.value, 10) : undefined;
+      populateClienteDropdown(currentVal);
     } catch (err) {
       console.error('Error cargando clientes para el select:', err);
+    } finally {
+      if (btnRefresh) setTimeout(() => btnRefresh.classList.remove('animate-spin'), 500);
     }
   }
+
+  window.addEventListener('focus', () => {
+    if (modal && !modal.classList.contains('hidden')) {
+      window.loadClientesForSelect();
+    }
+  });
 
   async function loadMarcasForSelect() {
     try {

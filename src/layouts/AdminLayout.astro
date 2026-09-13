@@ -14,7 +14,7 @@ const navItems = [
   { label: 'Clientes', href: '/admin/clientes', icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>` },
   { label: 'Vehículos', href: '/admin/vehiculos', icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>` },
   { label: 'Trabajos', href: '/admin/trabajos', icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>` },
-  { label: 'Configuración', href: '/admin/configuracion', icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>` },
+  { label: 'Catálogos', href: '/admin/catalogos', icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>` },
 ];
 
 function isActive(href: string) {
@@ -61,9 +61,10 @@ function isActive(href: string) {
       html.dark .bg-\[\#F8F9FA\] { background-color: #18181b !important; }
       html.dark header.bg-white { background-color: #27272a !important; border-color: #3f3f46 !important; }
       html.dark .bg-white { background-color: #27272a !important; border-color: #3f3f46 !important; }
-      html.dark .bg-gray-50 { background-color: #202022 !important; border-color: #3f3f46 !important; }
+      html.dark .bg-gray-50, html.dark .bg-gray-50\/50, html.dark .bg-gray-100 { background-color: #202022 !important; border-color: #3f3f46 !important; }
       html.dark .border-gray-100, html.dark .border-gray-200 { border-color: #3f3f46 !important; }
-      html.dark .divide-gray-100 > :not([hidden]) ~ :not([hidden]) { border-color: #3f3f46 !important; }
+      html.dark .divide-gray-100 > * { border-color: #3f3f46 !important; }
+      html.dark [class*="divide-"] > * { border-color: #3f3f46 !important; }
       
       /* Sidebar in Dark Mode */
       html.dark #admin-sidebar { background-color: #09090b !important; border-right: 1px solid #27272a !important; }
@@ -79,6 +80,14 @@ function isActive(href: string) {
       html.dark [class*="text-gray-500"] { color: #71717a !important; }
       html.dark [class*="text-gray-400"] { color: #52525b !important; }
       html.dark p.text-gray-600 { color: #a1a1aa !important; }
+
+      /* Vibrant Accent Colors (Badges, Highlighted text) */
+      html.dark .text-green-800, html.dark [class*="text-[#2D6A4F]"] { color: #34d399 !important; }
+      html.dark .bg-green-100, html.dark [class*="bg-[#2D6A4F]"] { background-color: rgba(52, 211, 153, 0.15) !important; color: #34d399 !important; }
+      html.dark .text-yellow-800, html.dark [class*="text-[#F4A261]"] { color: #fbbf24 !important; }
+      html.dark .bg-yellow-100, html.dark [class*="bg-[#F4A261]"] { background-color: rgba(251, 191, 36, 0.15) !important; color: #fbbf24 !important; }
+      html.dark .text-primary { color: #60a5fa !important; }
+      html.dark .bg-primary\/10 { background-color: rgba(96, 165, 250, 0.15) !important; color: #60a5fa !important; }
       
       /* Inputs and Controls */
       html.dark input, html.dark select, html.dark textarea { 
@@ -86,7 +95,7 @@ function isActive(href: string) {
         color: #f4f4f5 !important; 
         border-color: #52525b !important; 
       }
-      html.dark .hover\:bg-gray-50:hover { background-color: #3f3f46 !important; }
+      html.dark [class*="hover:bg-gray-50"]:hover { background-color: #3f3f46 !important; }
       html.dark .hover\:bg-gray-100:hover { background-color: #52525b !important; }
       
       /* SVG Icons specific fixes */

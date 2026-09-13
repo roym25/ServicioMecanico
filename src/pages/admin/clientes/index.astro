@@ -144,6 +144,8 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
               type="text"
               id="form-nombre"
               required
+              minlength="2"
+              maxlength="50"
               placeholder="Ej. Juan"
               class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
             />
@@ -158,6 +160,8 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
               type="text"
               id="form-apellido"
               required
+              minlength="2"
+              maxlength="50"
               placeholder="Ej. Pérez"
               class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
             />
@@ -171,6 +175,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <input
               type="text"
               id="form-apellido-materno"
+              maxlength="50"
               placeholder="Opcional"
               class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
             />
@@ -185,6 +190,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <input
             type="text"
             id="form-domicilio"
+            maxlength="200"
             placeholder="Ej. Av. Hidalgo #123, Col. Centro"
             class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
           />
@@ -199,6 +205,10 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <input
               type="tel"
               id="form-telefono"
+              minlength="10"
+              maxlength="20"
+              pattern="^\+?[0-9\s\-]+$"
+              title="Debe contener entre 10 y 20 números, espacios o guiones."
               placeholder="Ej. 55 1234 5678"
               class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
             />
@@ -212,7 +222,10 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
             <input
               type="text"
               id="form-rfc"
+              minlength="12"
               maxlength="13"
+              pattern="^[a-zA-ZñÑ&]{3,4}\d{6}[a-zA-Z0-9]{3}$"
+              title="Ingresa un RFC válido (12 o 13 caracteres con formato correcto)"
               placeholder="Ej. PEGJ850101XYZ"
               class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm uppercase focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
             />
@@ -227,6 +240,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
           <input
             type="email"
             id="form-correo"
+            maxlength="100"
             placeholder="Opcional"
             class="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
           />
